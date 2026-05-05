@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixelia Pictures — AI Film & Creative Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #E8FF00;
+    --yellow-dim: #b8cc00;
+    --black: #060606;
+    --dark: #0d0d0d;
+    --mid: #1a1a1a;
+    --white: #f0f0f0;
+    --mono: 'Space Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--body);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--yellow); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(232,255,0,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(232,255,0,0.03) 0%, transparent 60%);
+  }
+
+  /* Scanlines */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Glitch grid */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(232,255,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,255,0,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridShift 8s ease-in-out infinite;
+  }
+
+  @keyframes gridShift {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(-4px); }
+  }
+
+  /* Ticker */
+  .ticker-wrap {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    overflow: hidden;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: tickerScroll 30s linear infinite;
+  }
+
+  .ticker span {
+    font-family: var(--display);
+    font-size: 200px;
+    color: var(--yellow);
+    padding-right: 80px;
+    letter-spacing: -0.02em;
+  }
+
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Counter / year tag */
+  .hero-tag {
+    position: absolute;
+    top: 120px;
+    right: 48px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    opacity: 0.7;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Hero content */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(80px, 12vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title .yellow { color: var(--yellow); }
+
+  .hero-title-2 {
+    font-family: var(--display);
+    font-size: clamp(80px, 12vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(232,255,0,0.4);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-desc {
+    max-width: 420px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(240,240,240,0.6);
+    font-weight: 300;
+  }
+
+  .hero-desc strong {
+    color: var(--yellow);
+    font-weight: 500;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 36px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-primary:hover {
+    background: var(--white);
+    transform: translate(-2px, -2px);
+  }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid rgba(232,255,0,0.3);
+    padding-bottom: 2px;
+  }
+
+  .btn-secondary:hover { color: var(--yellow); }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--yellow), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  .scroll-text {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: rgba(232,255,0,0.5);
+    text-transform: uppercase;
+  }
+
+  /* MARQUEE DIVIDER */
+  .marquee-section {
+    border-top: 1px solid rgba(232,255,0,0.2);
+    border-bottom: 1px solid rgba(232,255,0,0.2);
+    overflow: hidden;
+    padding: 0;
+    background: var(--dark);
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marqueeScroll 20s linear infinite;
+    padding: 14px 0;
+  }
+
+  .marquee-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    padding: 0 40px;
+    opacity: 0.7;
+  }
+
+  .marquee-dot {
+    color: rgba(232,255,0,0.3);
+    padding: 0 10px;
+  }
+
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* WORK SECTION */
+  .section {
+    padding: 120px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .section-link {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.4);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,255,0,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .section-link:hover { color: var(--yellow); }
+
+  /* Project grid */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .project-card {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: var(--mid);
+    cursor: none;
+  }
+
+  .project-card:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/7;
+  }
+
+  .project-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+
+  .project-card:hover .project-bg {
+    transform: scale(1.04);
+  }
+
+  /* Individual project colors */
+  .card-1 .project-bg {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1200 40%, #2a2000 100%);
+  }
+  .card-2 .project-bg {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1a0d 100%);
+  }
+  .card-3 .project-bg {
+    background: linear-gradient(135deg, #1a0d0d 0%, #0d0d1a 100%);
+  }
+
+  /* Noise texture on cards */
+  .project-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* Glitch line on hover */
+  .project-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover .project-glitch { transform: scaleX(1); }
+
+  .project-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px;
+    background: linear-gradient(to top, rgba(6,6,6,0.95) 0%, transparent 100%);
+    transform: translateY(8px);
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover .project-info { transform: translateY(0); }
+
+  .project-category {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+
+  .project-title {
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: rgba(240,240,240,0.5);
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.3s ease 0.1s;
+  }
+
+  .project-card:hover .project-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Big number badge */
+  .project-num {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: var(--display);
+    font-size: 11px;
+    color: rgba(232,255,0,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* Placeholder visual elements on cards */
+  .card-visual {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.15;
+  }
+
+  .card-visual svg {
+    width: 40%;
+    height: 40%;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    padding: 120px 48px;
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    border-top: 1px solid rgba(232,255,0,0.1);
+  }
+
+  .about-left .section-label { margin-bottom: 20px; }
+
+  .about-title {
+    font-family: var(--display);
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 1.05;
+    margin-bottom: 32px;
+  }
+
+  .about-title .stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--yellow);
+  }
+
+  .about-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(240,240,240,0.6);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .about-body strong { color: var(--white); font-weight: 500; }
+
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .stat-box {
+    background: var(--mid);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--yellow);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s ease;
+  }
+
+  .stat-box:hover::before { transform: scaleY(1); }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 52px;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.4);
+  }
+
+  /* SERVICES */
+  .services-section {
+    padding: 120px 48px;
+    border-top: 1px solid rgba(232,255,0,0.1);
+  }
+
+  .services-list {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: none;
+    transition: all 0.2s;
+    gap: 40px;
+  }
+
+  .service-item:hover {
+    padding-left: 16px;
+    border-bottom-color: rgba(232,255,0,0.3);
+  }
+
+  .service-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .service-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(232,255,0,0.4);
+    letter-spacing: 0.1em;
+    min-width: 32px;
+  }
+
+  .service-name {
+    font-family: var(--display);
+    font-size: 32px;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  .service-item:hover .service-name { color: var(--yellow); }
+
+  .service-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232,255,0,0.5);
+    background: rgba(232,255,0,0.08);
+    padding: 6px 12px;
+    border: 1px solid rgba(232,255,0,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 64px 48px;
+    background: var(--dark);
+    border-top: 1px solid rgba(232,255,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--yellow);
+    text-transform: uppercase;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(240,240,240,0.25);
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--yellow); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Glitch text effect */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    color: var(--yellow);
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    opacity: 0;
+  }
+
+  .glitch::after {
+    color: #00ffcc;
+    animation: glitch2 4s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    opacity: 0;
+  }
+
+  @keyframes glitch1 {
+    0%, 85%, 100% { opacity: 0; transform: translateX(0); }
+    87% { opacity: 0.8; transform: translateX(-4px); }
+    89% { opacity: 0; transform: translateX(4px); }
+    91% { opacity: 0.6; transform: translateX(-2px); }
+    93% { opacity: 0; }
+  }
+
+  @keyframes glitch2 {
+    0%, 85%, 100% { opacity: 0; transform: translateX(0); }
+    88% { opacity: 0.8; transform: translateX(4px); }
+    90% { opacity: 0; transform: translateX(-4px); }
+    92% { opacity: 0.6; transform: translateX(2px); }
+    94% { opacity: 0; }
+  }
+
+  /* LIA XO SECTION */
+  .liaxo-section {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+    border-top: 1px solid rgba(232,255,0,0.15);
+  }
+
+  .liaxo-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .liaxo-left {
+    padding: 80px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .liaxo-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Animated album art placeholder */
+  .album-visual {
+    width: 280px;
+    height: 280px;
+    position: relative;
+  }
+
+  .album-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(232,255,0,0.2);
+    border-radius: 50%;
+    animation: albumSpin 20s linear infinite;
+  }
+
+  .album-ring:nth-child(2) {
+    inset: 20px;
+    border-color: rgba(232,255,0,0.1);
+    animation-duration: 14s;
+    animation-direction: reverse;
+  }
+
+  .album-ring:nth-child(3) {
+    inset: 40px;
+    border-color: rgba(232,255,0,0.15);
+    animation-duration: 8s;
+  }
+
+  .album-center {
+    position: absolute;
+    inset: 60px;
+    background: var(--mid);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(232,255,0,0.3);
+  }
+
+  .album-center-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .album-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--yellow);
+    border-radius: 50%;
+    animation: albumPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes albumSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes albumPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* Album glow */
+  .liaxo-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(232,255,0,0.05) 0%, transparent 70%);
+  }
+
+  .new-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+
+  .new-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--black);
+    border-radius: 50%;
+    animation: badgePulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .liaxo-artist {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(232,255,0,0.6);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .liaxo-album {
+    font-family: var(--display);
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .liaxo-album .dim {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,240,240,0.25);
+  }
+
+  .liaxo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(240,240,240,0.35);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .liaxo-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(240,240,240,0.55);
+    font-weight: 300;
+    margin-bottom: 40px;
+    max-width: 440px;
+  }
+
+  .liaxo-desc strong { color: var(--white); font-weight: 500; }
+
+  /* Track list preview */
+  .track-preview {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .track-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 14px;
+    background: var(--mid);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(240,240,240,0.5);
+    transition: all 0.2s;
+    cursor: none;
+  }
+
+  .track-row:hover {
+    background: rgba(232,255,0,0.08);
+    color: var(--yellow);
+  }
+
+  .track-num { opacity: 0.4; min-width: 20px; }
+  .track-name { flex: 1; text-transform: uppercase; letter-spacing: 0.15em; }
+  .track-dur { opacity: 0.4; }
+
+  /* Streaming links */
+  .streaming-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .stream-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid rgba(232,255,0,0.25);
+    background: transparent;
+    color: rgba(240,240,240,0.6);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: none;
+  }
+
+  .stream-btn:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    background: rgba(232,255,0,0.05);
+  }
+
+  .liaxo-page-link {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,255,0,0.4);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .liaxo-page-link:hover { opacity: 0.6; }
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Pixelia Pictures</a>
+  <ul class="nav-links">
+    <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+    <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+    <li><a href="#">AI Music</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" style="color: var(--yellow); opacity: 1;">Your Website ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-overlay"></div>
+  
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>PIXELIA PICTURES</span>
+      <span>PIXELIA PICTURES</span>
+      <span>PIXELIA PICTURES</span>
+      <span>PIXELIA PICTURES</span>
+    </div>
+  </div>
+
+  <div class="hero-tag">EST. 2005 — BUDAPEST</div>
+
+  <div class="hero-content">
+    <p class="hero-label">⬡ AI Film & Creative Studio</p>
+    <h1 class="hero-title glitch" data-text="PIXELIA">PIXELIA</h1>
+    <h1 class="hero-title-2">PICTURES</h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        A <strong>Budapest-based AI film studio</strong> creating music videos, experimental cinema, and generative visual art. Active since 2005. <strong>40+ IMDB credits.</strong> Currently in post-production: <strong>Claude on the Rocks</strong> — AI Film Festival submission, Venice 2025.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-primary">View Work</a>
+        <a href="#contact" class="btn-secondary">Get in touch →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">AI Film</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Music Video</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Generative Art</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Photography</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Creative Direction</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Budapest · Venice · London</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">AI Film</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Music Video</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Generative Art</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Photography</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Creative Direction</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">Budapest · Venice · London</span><span class="marquee-dot">◆</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-header">
+    <div>
+      <p class="section-label">⬡ Selected Work</p>
+      <h2 class="section-title">PROJECTS</h2>
+    </div>
+    <a href="#" class="section-link">All projects →</a>
+  </div>
+
+  <div class="work-grid">
+
+    <!-- Featured project -->
+    <div class="project-card card-1">
+      <div class="project-bg"></div>
+      <div class="project-noise"></div>
+      <div class="project-glitch"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="60" r="40" stroke="#E8FF00" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="100" cy="60" r="60" stroke="#E8FF00" stroke-width="0.3" opacity="0.3"/>
+          <line x1="0" y1="60" x2="200" y2="60" stroke="#E8FF00" stroke-width="0.3" opacity="0.4"/>
+          <line x1="100" y1="0" x2="100" y2="120" stroke="#E8FF00" stroke-width="0.3" opacity="0.4"/>
+          <rect x="70" y="40" width="60" height="40" stroke="#E8FF00" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="project-num">01</div>
+      <div class="project-info">
+        <p class="project-category">AI Film · Music Video · 2025</p>
+        <h3 class="project-title">CLAUDE ON THE ROCKS</h3>
+        <p class="project-desc">100% AI-generated music video for Lia XO. Reply AI Film Festival submission. A film-within-a-film set in Paris and Venice.</p>
+      </div>
+    </div>
+
+    <div class="project-card card-2">
+      <div class="project-bg"></div>
+      <div class="project-noise"></div>
+      <div class="project-glitch"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="160" height="100" stroke="#E8FF00" stroke-width="0.5" opacity="0.4"/>
+          <path d="M20 70 L180 70" stroke="#E8FF00" stroke-width="0.3" opacity="0.5"/>
+          <path d="M100 20 L100 120" stroke="#E8FF00" stroke-width="0.3" opacity="0.5"/>
+          <circle cx="100" cy="70" r="25" stroke="#E8FF00" stroke-width="0.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="project-num">02</div>
+      <div class="project-info">
+        <p class="project-category">Photography · Editorial · 2026</p>
+        <h3 class="project-title">MAGYAR KETO KONYHA</h3>
+        <p class="project-desc">Cookbook photography series. Zsolnay porcelain, Hungarian light, food as heritage.</p>
+      </div>
+    </div>
+
+    <div class="project-card card-3">
+      <div class="project-bg"></div>
+      <div class="project-noise"></div>
+      <div class="project-glitch"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="100,20 180,120 20,120" stroke="#E8FF00" stroke-width="0.5" opacity="0.5" fill="none"/>
+          <polygon points="100,40 160,110 40,110" stroke="#E8FF00" stroke-width="0.3" opacity="0.3" fill="none"/>
+          <line x1="100" y1="20" x2="100" y2="120" stroke="#E8FF00" stroke-width="0.3" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="project-num">03</div>
+      <div class="project-info">
+        <p class="project-category">Music · AI · 2025</p>
+        <h3 class="project-title">LIA XO — MIDNIGHT UTC</h3>
+        <p class="project-desc">Debut album. Electronic, cinematic, bilingual. Distributed globally via DistroKid.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip" id="about">
+  <div class="about-left">
+    <p class="section-label">⬡ The Studio</p>
+    <h2 class="about-title">MADE IN<br><span class="stroke">BUDAPEST</span><br>SEEN IN<br>VENICE</h2>
+    <p class="about-body">
+      Pixelia Pictures is the production identity of <strong>Nelli Horváth</strong> — photographer, AI film director, and music artist operating as <strong>Lia XO</strong>. With 40+ IMDB credits and roots in London's film industry, now building entirely AI-native cinema. <strong>Digitized at Warner Bros in 2019.</strong> Currently submitting to the Reply AI Film Festival, Venice.
+    </p>
+    <a href="#contact" class="btn-primary" style="display:inline-block;">Work with us</a>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">IMDB Credits</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2005</div>
+      <div class="stat-label">Founded</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">AI-generated</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Platforms</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-header">
+    <div>
+      <p class="section-label">⬡ What We Do</p>
+      <h2 class="section-title">SERVICES</h2>
+    </div>
+  </div>
+
+  <div class="services-list">
+    <div class="service-item">
+      <div class="service-left">
+        <span class="service-num">01</span>
+        <span class="service-name">AI Film & Music Video</span>
+      </div>
+      <span class="service-tag">Active</span>
+    </div>
+    <div class="service-item">
+      <div class="service-left">
+        <span class="service-num">02</span>
+        <span class="service-name">Generative Visual Art</span>
+      </div>
+      <span class="service-tag">Active</span>
+    </div>
+    <div class="service-item">
+      <div class="service-left">
+        <span class="service-num">03</span>
+        <span class="service-name">Editorial Photography</span>
+      </div>
+      <span class="service-tag">Active</span>
+    </div>
+    <div class="service-item">
+      <div class="service-left">
+        <span class="service-num">04</span>
+        <span class="service-name">Creative Direction</span>
+      </div>
+      <span class="service-tag">Available</span>
+    </div>
+    <div class="service-item">
+      <div class="service-left">
+        <span class="service-num">05</span>
+        <span class="service-name">AI Art Prints</span>
+      </div>
+      <span class="service-tag">Etsy</span>
+    </div>
+  </div>
+</section>
+
+<!-- LIA XO MUSIC SECTION -->
+<section class="liaxo-section" id="music">
+  <div class="liaxo-inner">
+    <div class="liaxo-left">
+      <div class="new-badge">New Album Out Now</div>
+      <p class="liaxo-artist">Pixelia Pictures Music · Lia XO</p>
+      <h2 class="liaxo-album">MIDNIGHT<br><span class="dim">UTC</span></h2>
+      <p class="liaxo-sub">Debut Album · 2025 · Electronic · Cinematic</p>
+      <p class="liaxo-desc">
+        The debut album from <strong>Lia XO</strong> — dark electronic, nordic soul, and cinematic melancholy. 7 tracks including the bilingual debut single <strong>"Claude"</strong>, live on 20+ platforms worldwide. Produced entirely with AI, distributed globally.
+      </p>
+
+      <div class="track-preview">
+        <div class="track-row"><span class="track-num">01</span><span class="track-name">Glasswing 🦋</span><span class="track-dur">2:52</span></div>
+        <div class="track-row"><span class="track-num">02</span><span class="track-name">Midnight UTC</span><span class="track-dur">3:14</span></div>
+        <div class="track-row"><span class="track-num">03</span><span class="track-name">Last Transmission</span><span class="track-dur">3:14</span></div>
+        <div class="track-row"><span class="track-num">04</span><span class="track-name">Signal Lost</span><span class="track-dur">3:28</span></div>
+        <div class="track-row"><span class="track-num">05</span><span class="track-name">Zero Gravity</span><span class="track-dur">2:24</span></div>
+        <div class="track-row"><span class="track-num">06</span><span class="track-name">Digital Ghost</span><span class="track-dur">3:40</span></div>
+        <div class="track-row"><span class="track-num">07</span><span class="track-name">Cold Architecture</span><span class="track-dur">2:58</span></div>
+      </div>
+
+      <div class="streaming-links">
+        <a href="#" class="stream-btn">⬡ Spotify</a>
+        <a href="#" class="stream-btn">⬡ Apple Music</a>
+        <a href="#" class="stream-btn">⬡ YouTube</a>
+        <a href="#" class="stream-btn">⬡ All Platforms</a>
+      </div>
+
+      <a href="lia-xo.html" class="liaxo-page-link">Full Lia XO page →</a>
+    </div>
+
+    <div class="liaxo-right">
+      <div class="album-visual">
+        <div class="album-ring"></div>
+        <div class="album-ring"></div>
+        <div class="album-ring"></div>
+        <div class="album-center">
+          <div class="album-dot"></div>
+          <span class="album-center-label">LIA XO<br>MIDNIGHT<br>UTC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="footer-logo">Pixelia Pictures</div>
+  <p class="footer-copy">© 2025 Pixelia Pictures — Budapest</p>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Spotify</a></li>
+    <li><a href="#">IMDB</a></li>
+    <li><a href="#">Etsy</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    cursor.style.left = mx - 6 + 'px';
+    cursor.style.top = my - 6 + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Scale cursor on hover
+  document.querySelectorAll('a, button, .project-card, .service-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+</script>
+
+</body>
+</html>
