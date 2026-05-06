@@ -45,10 +45,11 @@
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
     .nav-toggle { display: flex; }
-    .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: rgba(6,6,6,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 99; }
+    .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(6,6,6,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 36px; z-index: 99; padding-top: 80px; overflow-y: auto; }
     .nav-links.open { display: flex; }
-    .nav-links a { font-size: 13px; opacity: 0.6; }
+    .nav-links a { font-size: 15px; opacity: 0.6; }
     .hero { padding: 120px 24px 60px; }
+    .hero-title { font-size: clamp(60px, 18vw, 120px); }
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
   }
