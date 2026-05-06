@@ -28,26 +28,12 @@
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
+  .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
 
-  /* WIREFRAME HELPERS */
-  .wf-block {
-    border: 1px dashed rgba(232,255,0,0.2);
-    background: rgba(232,255,0,0.02);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 8px;
-    position: relative;
-  }
-  .wf-label {
-    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(232,255,0,0.3);
-    text-align: center;
-  }
-  .wf-size {
-    font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em;
-    color: rgba(232,255,0,0.15); text-align: center;
-  }
+  .wf-block { border: 1px dashed rgba(232,255,0,0.2); background: rgba(232,255,0,0.02); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; position: relative; }
+  .wf-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.3); text-align: center; }
+  .wf-size { font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; color: rgba(232,255,0,0.15); text-align: center; }
 
-  /* PAGE HEADER */
   .page-header { padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; }
   .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
@@ -56,20 +42,16 @@
   .page-intro { max-width: 520px; font-size: 15px; line-height: 1.7; color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 32px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.6s forwards; }
   .page-intro strong { color: var(--white); font-weight: 500; }
 
-  /* SECTION */
   .section { padding: 100px 48px; }
   .section + .section { border-top: 1px solid rgba(232,255,0,0.08); }
   .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px; }
   .section-title { font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 40px; }
 
-  /* FILM HERO */
   .film-hero-section { padding: 80px 48px; background: var(--dark); border-bottom: 1px solid rgba(232,255,0,0.1); }
   .film-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 
-  /* Video placeholder */
   .video-placeholder { aspect-ratio: 16/9; }
 
-  /* Film info */
   .film-status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,255,0,0.1); border: 1px solid rgba(232,255,0,0.3); color: var(--yellow); font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 6px 14px; margin-bottom: 24px; }
   .film-status-badge::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -84,47 +66,25 @@
   .meta-key { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.4); min-width: 100px; }
   .meta-val { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: rgba(240,240,240,0.6); }
 
-  /* Tech stack */
   .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
   .tech-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.06); border: 1px solid rgba(232,255,0,0.15); padding: 5px 12px; }
 
-  /* STILLS GRID */
   .stills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 48px; }
   .still-placeholder { aspect-ratio: 16/9; }
 
-  /* AVATAR SECTION */
   .avatar-section { background: var(--dark); }
   .avatar-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .avatar-coming { display: flex; align-items: center; justify-content: center; }
-  .avatar-circle {
-    width: 300px; height: 300px; border-radius: 50%;
-    border: 1px dashed rgba(232,255,0,0.2);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 12px;
-    position: relative;
-    animation: avatarPulse 4s ease-in-out infinite;
-  }
-  .avatar-circle::before {
-    content: ''; position: absolute;
-    inset: -20px; border-radius: 50%;
-    border: 1px dashed rgba(232,255,0,0.08);
-  }
-  .avatar-circle::after {
-    content: ''; position: absolute;
-    inset: -40px; border-radius: 50%;
-    border: 1px dashed rgba(232,255,0,0.05);
-  }
+  .avatar-circle { width: 300px; height: 300px; border-radius: 50%; border: 1px dashed rgba(232,255,0,0.2); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; position: relative; animation: avatarPulse 4s ease-in-out infinite; }
+  .avatar-circle::before { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 1px dashed rgba(232,255,0,0.08); }
+  .avatar-circle::after { content: ''; position: absolute; inset: -40px; border-radius: 50%; border: 1px dashed rgba(232,255,0,0.05); }
   @keyframes avatarPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
-
   .avatar-icon { font-size: 48px; }
   .avatar-circle-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.4); text-align: center; line-height: 1.6; }
-
   .avatar-desc { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 28px; }
   .avatar-desc strong { color: var(--white); font-weight: 500; }
-
   .coming-soon-tag { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(232,255,0,0.2); color: rgba(232,255,0,0.5); font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 18px; }
 
-  /* FOOTER */
   footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
@@ -145,70 +105,32 @@
   <ul class="nav-links">
     <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
     <li><a href="#" class="active">AI Video</a></li>
-    <li><a href="#">AI Music</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+    <li><a href="pixeliapictures-about.html">About</a></li>
+    <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
   </ul>
 </nav>
 
-<!-- PAGE HEADER -->
 <section class="page-header">
   <div class="grid-overlay"></div>
   <p class="page-label">⬡ Pixelia Pictures</p>
   <h1 class="page-title">AI<br><span class="outline">VIDEO</span></h1>
-  <p class="page-intro">100% AI-generated film and video by <strong>Pixelia Pictures</strong>. Midjourney keyframes, Kling video generation, Photoshop 4K upscaling. Currently in post-production.</p>
+  <p class="page-intro">100% AI-generated film and video by <strong>Pixelia Pictures</strong>. Midjourney keyframes, Kling video generation, Photoshop 4K upscaling. Currently in pre-production.</p>
 </section>
 
-<!-- FEATURED FILM -->
 <section class="film-hero-section">
   <div class="film-hero-inner">
 
-    <!-- Video placeholder -->
     <div class="video-placeholder wf-block">
       <div class="wf-label">⬡ Video Player / Trailer<br>Claude on the Rocks</div>
       <div class="wf-size">16:9 · Kling 3.0 · 4K</div>
     </div>
 
-    <!-- Film info -->
     <div>
-      <div class="film-status-badge">In Production · 2025</div>
       <h2 class="film-title">CLAUDE<br>ON THE<br>ROCKS</h2>
-      <p class="film-subtitle">Lia XO · AI Music Video · Pixelia Pictures</p>
-      <p class="film-desc">
-        A <strong>100% AI-generated music video</strong> for Lia XO. A French writer alone in a Haussmann Paris apartment. A small wheeled robot. A bourbon cocktail delivered by LED ticker. <strong>B&W cinematic aesthetic</strong> — Fellini meets Kubrick.
-      </p>
-
-      <div class="film-meta">
-        <div class="film-meta-row">
-          <span class="meta-key">Director</span>
-          <span class="meta-val">Nelli Horváth / Pixelia Pictures</span>
-        </div>
-        <div class="film-meta-row">
-          <span class="meta-key">Artist</span>
-          <span class="meta-val">Lia XO</span>
-        </div>
-        <div class="film-meta-row">
-          <span class="meta-key">Format</span>
-          <span class="meta-val">16:9 · 4K · B&W</span>
-        </div>
-        <div class="film-meta-row">
-          <span class="meta-key">Status</span>
-          <span class="meta-val">Post-production · 2025</span>
-        </div>
-      </div>
-
-      <div class="tech-stack">
-        <span class="tech-tag">Midjourney</span>
-        <span class="tech-tag">Kling 3.0</span>
-        <span class="tech-tag">Photoshop</span>
-        <span class="tech-tag">Generative Fill</span>
-        <span class="tech-tag">4K Upscale</span>
-        <span class="tech-tag">100% AI</span>
-      </div>
     </div>
   </div>
 
-  <!-- Stills placeholders -->
   <div style="margin-top: 60px;">
     <p class="section-label">⬡ Production Stills</p>
     <div class="stills-grid">
@@ -220,7 +142,6 @@
   </div>
 </section>
 
-<!-- PIXELIA AVATAR -->
 <section class="section avatar-section">
   <div class="avatar-inner">
     <div>
