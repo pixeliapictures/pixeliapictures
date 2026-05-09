@@ -30,6 +30,8 @@
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
   .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 4px; }
+  .nav-toggle span { display: block; width: 24px; height: 1px; background: var(--yellow); transition: all 0.3s; }
 
   /* PAGE HEADER */
   .page-header { padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
@@ -40,19 +42,18 @@
   .page-intro { max-width: 520px; font-size: 15px; line-height: 1.7; color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 32px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.6s forwards; }
   .page-intro strong { color: var(--white); font-weight: 500; }
 
-  /* WIREFRAME HELPER */
-  .wf-block { border: 1px dashed rgba(232,255,0,0.2); background: rgba(232,255,0,0.02); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
-  .wf-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.3); text-align: center; }
+  /* LIA XO BIO STRIP — now at top */
+  .liaxo-strip { padding: 80px 48px; background: var(--dark); border-bottom: 1px solid rgba(232,255,0,0.08); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .liaxo-bio-title { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 24px; }
+  .liaxo-bio-title .stroke { color: transparent; -webkit-text-stroke: 1px var(--yellow); }
+  .liaxo-bio-text { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 28px; }
+  .liaxo-bio-text strong { color: var(--white); font-weight: 500; }
+  .liaxo-img-placeholder { aspect-ratio: 3/4; border: 1px dashed rgba(232,255,0,0.15); background: rgba(232,255,0,0.02); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.2); }
 
   /* ALBUM HERO */
-  .album-hero { padding: 80px 48px; background: var(--dark); border-bottom: 1px solid rgba(232,255,0,0.1); }
+  .album-hero { padding: 80px 48px; background: var(--black); border-bottom: 1px solid rgba(232,255,0,0.1); }
   .album-hero-inner { display: grid; grid-template-columns: 400px 1fr; gap: 80px; align-items: center; }
-
-  /* Album art placeholder */
   .album-art { width: 400px; height: 400px; position: relative; }
-  .album-art-placeholder { width: 100%; height: 100%; }
-
-  /* Spinning rings */
   .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(232,255,0,0.12); }
   .ring-1 { inset: 0; animation: spin 30s linear infinite; }
   .ring-2 { inset: 20px; border-color: rgba(232,255,0,0.07); animation: spin 26s linear infinite reverse; }
@@ -67,27 +68,19 @@
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   @keyframes pulse { 0%,100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
 
-  /* Album info */
   .new-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--yellow); color: var(--black); font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 6px 14px; margin-bottom: 24px; }
   .new-badge::before { content: ''; width: 6px; height: 6px; background: var(--black); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
-
   .artist-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; color: rgba(232,255,0,0.6); text-transform: uppercase; margin-bottom: 12px; }
   .album-title { font-family: var(--display); font-size: clamp(56px, 7vw, 96px); line-height: 0.95; margin-bottom: 8px; }
   .album-title .dim { color: transparent; -webkit-text-stroke: 1px rgba(240,240,240,0.2); }
   .album-sub { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(240,240,240,0.3); text-transform: uppercase; margin-bottom: 32px; }
 
-  /* Tracklist */
-  .tracklist { margin-bottom: 36px; display: flex; flex-direction: column; gap: 2px; }
-  .track-row { display: flex; align-items: center; gap: 16px; padding: 10px 14px; background: var(--mid); font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(240,240,240,0.5); transition: all 0.2s; cursor: none; }
-  .track-row:hover { background: rgba(232,255,0,0.08); color: var(--yellow); }
-  .track-num { opacity: 0.4; min-width: 20px; }
-  .track-name { flex: 1; text-transform: uppercase; letter-spacing: 0.15em; }
-  .track-dur { opacity: 0.4; }
-
   /* Streaming */
-  .streaming-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .streaming-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(232,255,0,0.4); margin-bottom: 12px; }
+  .streaming-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
   .stream-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1px solid rgba(232,255,0,0.2); background: transparent; color: rgba(240,240,240,0.5); font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; cursor: none; }
   .stream-btn:hover { border-color: var(--yellow); color: var(--yellow); background: rgba(232,255,0,0.05); }
+  .stream-btn.primary { border-color: var(--yellow); color: var(--yellow); }
 
   /* SINGLES */
   .section { padding: 100px 48px; }
@@ -96,24 +89,16 @@
   .section-title { font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 48px; }
 
   .singles-list { display: flex; flex-direction: column; gap: 2px; }
-  .single-item { display: flex; align-items: center; gap: 24px; padding: 20px 24px; background: var(--mid); transition: all 0.2s; cursor: none; }
+  .single-item { display: flex; align-items: center; gap: 24px; padding: 20px 24px; background: var(--mid); transition: all 0.2s; cursor: none; text-decoration: none; color: inherit; }
   .single-item:hover { background: rgba(232,255,0,0.06); padding-left: 36px; }
-  .single-cover { width: 56px; height: 56px; flex-shrink: 0; }
+  .single-cover { width: 56px; height: 56px; flex-shrink: 0; background: var(--dark); border: 1px dashed rgba(232,255,0,0.1); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 7px; color: rgba(232,255,0,0.2); }
   .single-info { flex: 1; }
   .single-title { font-family: var(--display); font-size: 24px; letter-spacing: 0.01em; transition: color 0.2s; line-height: 1; margin-bottom: 4px; }
   .single-item:hover .single-title { color: var(--yellow); }
   .single-meta { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.3); }
   .single-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.07); border: 1px solid rgba(232,255,0,0.15); padding: 4px 10px; white-space: nowrap; }
+  .single-tag.out { color: var(--yellow); border-color: var(--yellow); background: rgba(232,255,0,0.1); }
 
-  /* LIA XO BIO STRIP */
-  .liaxo-strip { padding: 80px 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.08); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .liaxo-bio-title { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 24px; }
-  .liaxo-bio-title .stroke { color: transparent; -webkit-text-stroke: 1px var(--yellow); }
-  .liaxo-bio-text { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 28px; }
-  .liaxo-bio-text strong { color: var(--white); font-weight: 500; }
-  .liaxo-img-placeholder { aspect-ratio: 3/4; }
-
-  /* FOOTER */
   footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
@@ -130,6 +115,9 @@
     .nav-links.open { display: flex !important; }
     .nav-links a { font-size: 16px; opacity: 0.6; }
     .page-header { padding: 120px 24px 48px; }
+    .liaxo-strip { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    .album-hero-inner { grid-template-columns: 1fr; }
+    .album-art { width: 100%; max-width: 320px; height: 320px; margin: 0 auto; }
     .section { padding: 60px 24px; }
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
@@ -143,13 +131,16 @@
 
 <nav>
   <a href="index.html" class="nav-logo">Pixelia Pictures</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
     <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
     <li><a href="#" class="active">AI Music</a></li>
     <li><a href="pixeliapictures-about.html">About</a></li>
     <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- PAGE HEADER -->
@@ -157,29 +148,47 @@
   <div class="grid-overlay"></div>
   <p class="page-label">⬡ Pixelia Pictures Music</p>
   <h1 class="page-title">AI<br><span class="outline">MUSIC</span></h1>
-  <p class="page-intro">AI-generated music by <strong>Lia XO</strong> — a Pixelia Pictures music project. Produced with Suno, distributed globally via DistroKid on 20+ platforms. Debut album <strong>Midnight UTC</strong> — coming soon.</p>
+  <p class="page-intro">AI-generated music by <strong>Lia XO</strong> — a Pixelia Pictures music project. Produced with Suno, distributed globally on 20+ platforms including Spotify, Apple Music and iTunes — with lyrics.</p>
+</section>
+
+<!-- LIA XO BIO — at top -->
+<section class="liaxo-strip">
+  <div>
+    <h2 class="liaxo-bio-title">LIA<br><span class="stroke">XO</span></h2>
+    <p class="liaxo-bio-text">
+      Lia XO is the music artist identity of <strong>Pixelia Pictures</strong>. Dark electronic, nordic soul, cinematic melancholy. Debut single <strong>"Claude"</strong> — a bilingual French/English track — out now on Spotify, Apple Music, iTunes and 20+ platforms worldwide. Lyrics approved and available on all platforms. Produced entirely with AI.
+    </p>
+    <div class="streaming-links">
+      <a href="https://open.spotify.com/artist/502tkcdH3KvVF1WYqVD3I5?si=3zGzGWz_TMasCvpb856h1A" target="_blank" class="stream-btn primary">⬡ Spotify</a>
+      <a href="https://www.instagram.com/theliaxo?igsh=MWZzeTI3eWRvbmF0bA%3D%3D&utm_source=qr" target="_blank" class="stream-btn">⬡ Instagram</a>
+    </div>
+  </div>
+  <div class="liaxo-img-placeholder">Lia XO · Artist Image</div>
 </section>
 
 <!-- ALBUM HERO -->
 <section class="album-hero">
   <div class="album-hero-inner">
 
-    <!-- Album cover -->
     <div class="album-art">
       <img src="MUTC.jpg" alt="Lia XO — Midnight UTC" style="width:100%;height:100%;object-fit:cover;">
     </div>
 
-    <!-- Album info -->
     <div>
+      <div class="new-badge">Out Now</div>
       <p class="artist-label">Lia XO · Pixelia Pictures Music</p>
       <h2 class="album-title">MIDNIGHT<br><span class="dim">UTC</span></h2>
       <p class="album-sub">Debut Album · 2025 · Electronic · Cinematic · Dark</p>
 
+      <p class="streaming-label">Listen on</p>
       <div class="streaming-links">
-        <a href="#" class="stream-btn">⬡ Spotify</a>
-        <a href="#" class="stream-btn">⬡ Apple Music</a>
-        <a href="#" class="stream-btn">⬡ YouTube Music</a>
-        <a href="#" class="stream-btn">⬡ All Platforms</a>
+        <a href="https://open.spotify.com/artist/502tkcdH3KvVF1WYqVD3I5?si=3zGzGWz_TMasCvpb856h1A" target="_blank" class="stream-btn primary">⬡ Spotify</a>
+        <a href="https://music.apple.com/search?term=lia+xo" target="_blank" class="stream-btn">⬡ Apple Music</a>
+        <a href="https://music.apple.com/search?term=lia+xo" target="_blank" class="stream-btn">⬡ iTunes</a>
+        <a href="https://www.youtube.com/results?search_query=lia+xo" target="_blank" class="stream-btn">⬡ YouTube Music</a>
+        <a href="https://tidal.com/search?q=lia+xo" target="_blank" class="stream-btn">⬡ Tidal</a>
+        <a href="https://www.deezer.com/search/lia%20xo" target="_blank" class="stream-btn">⬡ Deezer</a>
+        <a href="https://www.amazon.com/s?k=lia+xo&i=digital-music" target="_blank" class="stream-btn">⬡ Amazon Music</a>
       </div>
     </div>
   </div>
@@ -193,52 +202,52 @@
   <div class="singles-list">
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">▶</div>
       <div class="single-info">
         <h3 class="single-title">Claude</h3>
-        <p class="single-meta">Single · 2026</p>
+        <p class="single-meta">Single · 2026 · With lyrics</p>
       </div>
-      <span class="single-tag">Single</span>
+      <span class="single-tag out">Out Now</span>
     </div>
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">▶</div>
       <div class="single-info">
         <h3 class="single-title">Claude (Remastered)</h3>
-        <p class="single-meta">Single · 2026</p>
+        <p class="single-meta">Single · 2026 · With lyrics</p>
       </div>
-      <span class="single-tag">Single</span>
+      <span class="single-tag out">Out Now</span>
     </div>
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">▶</div>
       <div class="single-info">
         <h3 class="single-title">Budapest in Snow Tonight</h3>
-        <p class="single-meta">Single · 2026</p>
+        <p class="single-meta">Single · 2026 · With lyrics</p>
       </div>
-      <span class="single-tag">Single</span>
+      <span class="single-tag out">Out Now</span>
     </div>
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">▶</div>
       <div class="single-info">
         <h3 class="single-title">No Sleep</h3>
-        <p class="single-meta">Single · 2025</p>
+        <p class="single-meta">Single · 2025 · With lyrics</p>
       </div>
-      <span class="single-tag">Single</span>
+      <span class="single-tag out">Out Now</span>
     </div>
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">▶</div>
       <div class="single-info">
         <h3 class="single-title">No Sleep (Extended Remix)</h3>
-        <p class="single-meta">Single · 2025</p>
+        <p class="single-meta">Single · 2025 · With lyrics</p>
       </div>
-      <span class="single-tag">Single</span>
+      <span class="single-tag out">Out Now</span>
     </div>
 
     <div class="single-item">
-      <div class="single-cover wf-block"><div class="wf-label">Art</div></div>
+      <div class="single-cover">◈</div>
       <div class="single-info">
         <h3 class="single-title">Midnight UTC</h3>
         <p class="single-meta">Album · Coming Soon</p>
@@ -249,31 +258,13 @@
   </div>
 </section>
 
-<!-- LIA XO BIO -->
-<section class="liaxo-strip">
-  <div>
-    <h2 class="liaxo-bio-title">LIA<br><span class="stroke">XO</span></h2>
-    <p class="liaxo-bio-text">
-      Lia XO is the music artist identity of <strong>Pixelia Pictures</strong>. Dark electronic, nordic soul, cinematic melancholy. Debut single <strong>"Claude"</strong> — a bilingual French/English track — live on Spotify and 20+ platforms worldwide. Produced entirely with AI. Distributed via DistroKid.
-    </p>
-    <div class="streaming-links">
-      <a href="#" class="stream-btn">⬡ Spotify</a>
-      <a href="#" class="stream-btn">⬡ Instagram</a>
-    </div>
-  </div>
-  <div class="liaxo-img-placeholder wf-block">
-    <div class="wf-label">Lia XO<br>Artist Image<br>Placeholder</div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Pixelia Pictures</div>
   <p class="footer-copy">© 2025 Pixelia Pictures — Budapest</p>
   <ul class="footer-links">
-    <li><a href="#">Spotify</a></li>
-    <li><a href="#">Instagram</a></li>
-    <li><a href="#">DistroKid</a></li>
+    <li><a href="https://open.spotify.com/artist/502tkcdH3KvVF1WYqVD3I5?si=3zGzGWz_TMasCvpb856h1A" target="_blank">Spotify</a></li>
+    <li><a href="https://www.instagram.com/theliaxo?igsh=MWZzeTI3eWRvbmF0bA%3D%3D&utm_source=qr" target="_blank">Instagram</a></li>
   </ul>
 </footer>
 
@@ -294,13 +285,13 @@
     requestAnimationFrame(animateRing);
   }
   animateRing();
-  document.querySelectorAll('a, .track-row, .single-item').forEach(el => {
+  document.querySelectorAll('a, .single-item').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
     el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
   });
-  const toggle=document.getElementById('navToggle'),nav=document.getElementById('navLinks');
-  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
-  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+  const toggle = document.getElementById('navToggle'), nav = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 </script>
 </body>
 </html>
