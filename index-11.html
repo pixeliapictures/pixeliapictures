@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixelia Pictures</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #E8FF00;
+    --black: #060606;
+    --dark: #0d0d0d;
+    --mid: #1a1a1a;
+    --white: #f0f0f0;
+    --mono: 'Space Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: var(--body); overflow-x: hidden; cursor: none; }
+
+  /* ── CURSOR ── */
+  .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
+  .cursor.no-blend { mix-blend-mode: normal; opacity: 0; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
+  .cursor-ring.no-blend { mix-blend-mode: normal; opacity: 0; }
+  @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(6,6,6,0.95); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(232,255,0,0.08);
+  }
+  .nav-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 48px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--yellow); text-decoration: none;
+  }
+  /* Desktop links */
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--white); text-decoration: none;
+    opacity: 0.5; transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--yellow); }
+  .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
+
+  /* Menu button — mobile */
+  .menu-btn {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(240,240,240,0.55);
+    align-items: center; gap: 0.35rem;
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .menu-btn:hover { color: var(--yellow); }
+  .menu-btn .arr { font-size: 0.75rem; }
+
+  /* ── RADIO BUTTON ── */
+  .radio-btn {
+    position: relative;
+    display: flex; align-items: center; gap: 10px;
+    background: none; border: none; cursor: pointer;
+    padding: 0;
+  }
+  .radio-waves {
+    position: relative;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .radio-waves .wave {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid #00ff41;
+    opacity: 0;
+    animation: none;
+  }
+  .radio-waves .wave:nth-child(1) { width: 36px; height: 36px; }
+  .radio-waves .wave:nth-child(2) { width: 52px; height: 52px; }
+  .radio-waves .wave:nth-child(3) { width: 68px; height: 68px; }
+  .radio-btn.playing .wave {
+    animation: radioWave 2s ease-out infinite;
+  }
+  .radio-btn.playing .wave:nth-child(2) { animation-delay: 0.5s; }
+  .radio-btn.playing .wave:nth-child(3) { animation-delay: 1s; }
+  @keyframes radioWave {
+    0%   { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  .radio-btn, .radio-btn * {
+    isolation: isolate;
+  }
+  .radio-dot {
+    width: 10px; height: 10px;
+    background: #00ff41;
+    border-radius: 50%;
+    position: relative; z-index: 2;
+    box-shadow: 0 0 8px #00ff41, 0 0 20px rgba(0,255,65,0.4);
+    transition: background 0.3s;
+    mix-blend-mode: normal;
+  }
+  .radio-btn.playing .radio-dot {
+    animation: dotPulse 1s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%,100% { box-shadow: 0 0 8px #00ff41, 0 0 20px rgba(0,255,65,0.4); }
+    50%      { box-shadow: 0 0 16px #00ff41, 0 0 40px rgba(0,255,65,0.7); }
+  }
+  .radio-label {
+    font-family: var(--mono);
+    font-size: 9px; letter-spacing: 0.2em;
+    color: rgba(240,240,240,0.4);
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .radio-btn.playing .radio-label {
+    color: #00ff41;
+  }
+  @media (max-width: 768px) {
+    .radio-label { display: block; font-size: 8px; }
+    .radio-btn { position: static; transform: none; }
+  }
+  .spotify-link {
+    display: block;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.3);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .spotify-link:hover { color: #00ff41; }
+  .radio-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 0 8px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    width: 100%;
+    text-align: center;
+  }
+  .radio-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(232,255,0,0.06);
+    padding: 7px 0;
+    background: rgba(6,6,6,0.95);
+  }
+  .ticker-track {
+    display: flex; width: max-content;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.7);
+    white-space: nowrap; padding: 0 2.5rem;
+  }
+  .ticker-item .dot { color: var(--yellow); margin: 0 0.4rem; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── FULLSCREEN MENU OVERLAY ── */
+  .menu-overlay {
+    position: fixed; inset: 0;
+    background: #000;
+    z-index: 500;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 22px 24px 2.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .menu-overlay.open { opacity: 1; pointer-events: all; }
+
+  .overlay-top {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .overlay-logo {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--yellow);
+  }
+  .close-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(240,240,240,0.5);
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .close-btn:hover { color: var(--white); }
+
+  .overlay-nav {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding: 1rem 0;
+  }
+  .overlay-nav a {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(3rem, 11vw, 6rem);
+    font-weight: 300; color: var(--white);
+    text-decoration: none; line-height: 1;
+    padding: 0.65rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+  .overlay-nav a:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .overlay-nav a:hover { color: var(--yellow); padding-left: 0.5rem; }
+  .overlay-nav a.cta-link { color: rgba(232,255,0,0.7); }
+
+  .overlay-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .overlay-info {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.2);
+    line-height: 2;
+  }
+  .overlay-socials {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .overlay-socials a {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .overlay-socials a:hover { color: var(--yellow); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 160px 48px 80px; position: relative; overflow: hidden;
+    background: var(--black);
+  }
+  .grid-overlay { display: none; }
+  .hero-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--yellow); margin-bottom: 20px;
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+  .hero-title {
+    font-family: var(--display); font-size: clamp(80px, 14vw, 200px);
+    line-height: 0.88; position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-title .outline {
+    color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.25);
+  }
+  .hero-sub {
+    max-width: 520px; font-size: 15px; line-height: 1.7;
+    color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 40px;
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.6s ease 0.7s forwards;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: relative; z-index: 2; margin-top: 52px;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.6s ease 1s forwards;
+  }
+  .scroll-hint span {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(232,255,0,0.4);
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: rgba(232,255,0,0.25);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--yellow);
+    animation: scanline 2s ease-in-out infinite;
+  }
+  @keyframes scanline {
+    0% { left: -100%; } 100% { left: 100%; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px; background: var(--dark);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
+  .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--yellow); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-bar { padding: 18px 24px; }
+    .nav-links { display: none !important; }
+    .menu-btn { display: flex; }
+    .hero { padding: 120px 24px 60px; }
+    .hero-title { font-size: clamp(44px, 13vw, 90px); }
+    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+    <ul class="nav-links">
+      <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+      <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+      <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="pixeliapictures-about.html">About</a></li>
+      <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">
+      Menu <span class="arr">↗</span>
+    </button>
+  </div>
+  <!-- Radio strip -->
+  <div class="radio-strip">
+    <button class="radio-btn" id="radioBtn" aria-label="Claude on Air">
+      <div class="radio-waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="radio-dot"></div>
+      </div>
+      <span class="radio-label">Listen ClaudeAI!</span>
+    </button>
+    <a href="https://open.spotify.com/playlist/6EtuIqLtGeRz4Zx8x2qwbd?si=-oVm4sAZTFixdfnjlbrvJw&pi=CCSvEZ99TwiU2" target="_blank" class="spotify-link">Listen the whole album with ClaudeAI &amp; Lia XO ↗</a>
+  </div>
+  <audio id="radioAudio" src="claude_radio_dj.mp3" preload="auto"></audio>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <!-- repeated twice for seamless loop -->
+      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona<span class="dot">✦</span>Budapest<span class="dot">✦</span></span>
+      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona<span class="dot">✦</span>Budapest<span class="dot">✦</span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- FULLSCREEN MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <div class="overlay-logo">Pixelia Pictures</div>
+    <button class="close-btn" id="closeBtn">Close <span>↙</span></button>
+  </div>
+  <nav class="overlay-nav">
+    <a href="pixeliapictures-ai-images.html">AI Images</a>
+    <a href="pixeliapictures-ai-video.html">AI Video</a>
+    <a href="pixeliapictures-ai-music.html">AI Music</a>
+    <a href="pixeliapictures-about.html">About</a>
+    <a href="pixeliapictures-your-website.html" class="cta-link">Your Website ↗</a>
+  </nav>
+  <div class="overlay-bottom">
+    <div class="overlay-info">
+      Pixelia Pictures<br>Budapest, Hungary<br>© 2026
+    </div>
+    <div class="overlay-socials">
+      <a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram ↗</a>
+      <a href="mailto:hello@nellihorvath.com">Contact ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-overlay"></div>
+  <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
+  <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
+  <p class="hero-sub">AI-generated images, music and short films — created by Pixelia Pictures, Budapest.</p>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Pixelia Pictures</div>
+  <p class="footer-copy">© 2026 Pixelia Pictures — Budapest</p>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+    <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  const radioBtn = document.getElementById('radioBtn');
+  radioBtn.addEventListener('mouseenter', () => {
+    cursor.classList.add('no-blend');
+    ring.classList.add('no-blend');
+  });
+  radioBtn.addEventListener('mouseleave', () => {
+    cursor.classList.remove('no-blend');
+    ring.classList.remove('no-blend');
+  });
+
+  // Radio button play/stop
+  const radioBtn = document.getElementById('radioBtn');
+  const radioAudio = document.getElementById('radioAudio');
+  const spotifyUrl = 'https://open.spotify.com/track/2xYBs1kwBAGT8G7yuJHqgt?si=rxNR5Ay-TR6Gu-Rm9AA7sg';
+
+  radioBtn.addEventListener('click', () => {
+    if (radioBtn.classList.contains('playing')) {
+      radioAudio.pause();
+      radioAudio.currentTime = 0;
+      radioBtn.classList.remove('playing');
+    } else {
+      radioAudio.play();
+      radioBtn.classList.add('playing');
+      // After ident ends, open Spotify
+      radioAudio.onended = () => {
+        radioBtn.classList.remove('playing');
+        window.open(spotifyUrl, '_blank');
+      };
+    }
+  });
+
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx-6+'px'; cursor.style.top = my-6+'px';
+  });
+  function animateRing() {
+    rx += (mx-rx-18)*0.12; ry += (my-ry-18)*0.12;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button').forEach(el => {
+    if (el.closest('.radio-btn') || el.classList.contains('radio-btn')) return;
+    el.addEventListener('mouseenter', () => { cursor.style.transform='scale(2)'; ring.style.transform='scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform='scale(1)'; ring.style.transform='scale(1)'; });
+  });
+
+  // Menu overlay
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const overlay = document.getElementById('menuOverlay');
+
+  menuBtn.addEventListener('click', () => {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  });
+</script>
+</body>
+</html>
