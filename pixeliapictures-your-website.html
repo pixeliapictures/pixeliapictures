@@ -19,207 +19,166 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--white); font-family: var(--body); overflow-x: hidden; cursor: none; }
-
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
-
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(6,6,6,1); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 22px 48px; }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
   .nav-links a.cta { color: var(--yellow); opacity: 1; border-bottom: 1px solid rgba(232,255,0,0.4); padding-bottom: 2px; }
-
-  /* HERO */
+  .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
+  .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
+  .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .menu-overlay.open { opacity: 1; pointer-events: all; }
+  .overlay-top { display: flex; justify-content: space-between; align-items: center; }
+  .overlay-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
+  .close-btn { background: none; border: none; cursor: pointer; font-size: 20px; color: rgba(240,240,240,0.5); display: flex; align-items: center; justify-content: center; transition: color 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; }
+  .close-btn:hover { color: var(--white); }
+  .overlay-nav { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 1rem 0; }
+  .overlay-nav a { display: block; font-family: var(--display); font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 400; color: var(--white); text-decoration: none; line-height: 1; padding: 0.65rem 0; border-top: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.02em; transition: color 0.2s ease, padding-left 0.2s ease; }
+  .overlay-nav a:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .overlay-nav a:hover { color: var(--yellow); padding-left: 0.5rem; }
+  .overlay-nav a.cta-link { color: rgba(232,255,0,0.7); }
+  .overlay-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+  .overlay-info { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.2); line-height: 2; }
+  .overlay-socials { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .overlay-socials a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .overlay-socials a:hover { color: var(--yellow); }
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; }
-
-  /* Big background text */
   .hero-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--display); font-size: 28vw; color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.04); white-space: nowrap; pointer-events: none; z-index: 0; }
-
   .hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 24px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
   .hero-title { font-family: var(--display); font-size: clamp(64px, 10vw, 140px); line-height: 0.92; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; margin-bottom: 40px; }
   .hero-title .yellow { color: var(--yellow); }
   .hero-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.35); }
-
   .hero-sub { max-width: 560px; font-size: 16px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.6s forwards; }
   .hero-sub strong { color: var(--white); font-weight: 500; }
-
-  /* WHAT WE BUILD */
   .what-section { padding: 100px 48px; background: var(--dark); border-bottom: 1px solid rgba(232,255,0,0.08); }
   .what-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 48px; }
-
   .what-card { padding: 32px 24px; background: var(--mid); position: relative; overflow: hidden; transition: all 0.2s; cursor: none; }
   .what-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--yellow); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
   .what-card:hover::after { transform: scaleX(1); }
   .what-card:hover { background: rgba(232,255,0,0.04); }
-
   .what-num { font-family: var(--display); font-size: 48px; color: rgba(232,255,0,0.15); line-height: 1; margin-bottom: 16px; }
   .what-name { font-family: var(--display); font-size: 22px; margin-bottom: 10px; line-height: 1; transition: color 0.2s; }
   .what-card:hover .what-name { color: var(--yellow); }
   .what-desc { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; color: rgba(240,240,240,0.3); line-height: 1.7; text-transform: uppercase; }
-
-  /* MEEOW SECTION */
   .meeow-section { padding: 80px 48px; display: flex; align-items: center; gap: 80px; border-bottom: 1px solid rgba(232,255,0,0.08); }
-
   .meeow-visual { flex-shrink: 0; width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; }
   .meeow-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(232,255,0,0.15); animation: spin 12s linear infinite; }
   .meeow-ring-2 { inset: 20px; border-color: rgba(232,255,0,0.08); animation: spin 8s linear infinite reverse; }
   .meeow-icon { font-size: 64px; position: relative; z-index: 2; animation: meow 3s ease-in-out infinite; }
   @keyframes meow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
   .meeow-text { flex: 1; }
   .meeow-name { font-family: var(--display); font-size: 48px; color: var(--yellow); line-height: 1; margin-bottom: 12px; }
   .meeow-desc { font-size: 15px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; max-width: 500px; }
   .meeow-desc strong { color: var(--white); font-weight: 500; }
-
-  /* CONTACT FORM */
   .form-section { padding: 100px 48px; }
   .form-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
-
   .form-left h2 { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 24px; }
   .form-left h2 .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.35); }
   .form-left p { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.5); font-weight: 300; margin-bottom: 40px; }
   .form-left p strong { color: var(--white); font-weight: 500; }
-
-  /* Process steps */
   .process { display: flex; flex-direction: column; gap: 2px; }
   .process-step { display: flex; gap: 20px; padding: 16px 0; border-top: 1px solid rgba(232,255,0,0.08); align-items: baseline; }
   .process-num { font-family: var(--display); font-size: 20px; color: var(--yellow); min-width: 32px; }
   .process-desc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.4); line-height: 1.6; text-transform: uppercase; }
-
-  /* Form */
   .contact-form { display: flex; flex-direction: column; gap: 16px; }
-
   .form-group { display: flex; flex-direction: column; gap: 8px; }
   .form-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.5); }
-
-  .form-input, .form-textarea, .form-select {
-    background: var(--mid); border: 1px solid rgba(232,255,0,0.12);
-    color: var(--white); font-family: var(--body); font-size: 14px;
-    padding: 14px 18px; outline: none;
-    transition: border-color 0.2s;
-    cursor: none;
-  }
+  .form-input, .form-textarea, .form-select { background: var(--mid); border: 1px solid rgba(232,255,0,0.12); color: var(--white); font-family: var(--body); font-size: 14px; padding: 14px 18px; outline: none; transition: border-color 0.2s; cursor: none; }
   .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: rgba(232,255,0,0.4); }
   .form-input::placeholder, .form-textarea::placeholder { color: rgba(240,240,240,0.2); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; }
   .form-textarea { resize: vertical; min-height: 140px; }
   .form-select { appearance: none; cursor: none; }
   .form-select option { background: var(--mid); }
-
-  .form-submit {
-    margin-top: 8px; padding: 18px 40px;
-    background: var(--yellow); color: var(--black);
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    border: none; font-weight: 700; cursor: none;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    transition: all 0.2s; align-self: flex-start;
-  }
+  .form-submit { margin-top: 8px; padding: 18px 40px; background: var(--yellow); color: var(--black); font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; border: none; font-weight: 700; cursor: none; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); transition: all 0.2s; align-self: flex-start; }
   .form-submit:hover { background: var(--white); transform: translate(-2px, -2px); }
-
-  /* FOOTER */
   footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
   .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--yellow); }
-
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
-    .nav-toggle { display: flex; }
+    .nav-bar { padding: 18px 24px; }
     .nav-links { display: none !important; }
-    .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(6,6,6,0.98); flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 100px; gap: 28px; z-index: 99; overflow-y: auto; }
-    .nav-links.open { display: flex !important; }
-    .nav-links a { font-size: 16px; opacity: 0.6; }
-    .page-header { padding: 120px 24px 48px; }
-    .section { padding: 60px 24px; }
+    .menu-btn { display: flex; }
+    .hero { padding: 100px 24px 60px; }
+    .what-grid { grid-template-columns: 1fr 1fr; }
+    .what-section { padding: 60px 24px; }
+    .meeow-section { flex-direction: column; padding: 60px 24px; }
+    .form-section { padding: 60px 24px; }
+    .form-inner { grid-template-columns: 1fr; gap: 48px; }
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
   }
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-
 <nav>
-  <a href="index.html" class="nav-logo">Pixelia Pictures</a>
-  <ul class="nav-links">
-    <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
-    <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
-    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
-    <li><a href="pixeliapictures-about.html">About</a></li>
-    <li><a href="#" class="cta active">Your Website ↗</a></li>
-  </ul>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+    <ul class="nav-links">
+      <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+      <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+      <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="pixeliapictures-about.html">About</a></li>
+      <li><a href="#" class="cta active">Your Website ↗</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
 </nav>
-
-<!-- HERO -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <a href="index.html" class="overlay-logo">Pixelia Pictures</a>
+    <button class="close-btn" id="closeBtn">✕</button>
+  </div>
+  <nav class="overlay-nav">
+    <a href="pixeliapictures-ai-images.html">AI Images</a>
+    <a href="pixeliapictures-ai-video.html">AI Video</a>
+    <a href="pixeliapictures-ai-music.html">AI Music</a>
+    <a href="pixeliapictures-about.html">About</a>
+    <a href="#" class="cta-link">Your Website</a>
+  </nav>
+  <div class="overlay-bottom">
+    <div class="overlay-info">Pixelia Pictures<br>Budapest, Hungary<br>© 2025</div>
+    <div class="overlay-socials">
+      <a href="https://www.instagram.com/pixelia.ai" target="_blank">Instagram ↗</a>
+      <a href="mailto:hello@nellihorvath.com">Contact ↗</a>
+    </div>
+  </div>
+</div>
 <section class="hero">
   <div class="grid-overlay"></div>
   <div class="hero-bg-text">PIXELIA</div>
-  <p class="hero-label">⬡ Pixelia Pictures · AI Creative Contractor</p>
+  <p class="hero-label">&#x2B21; Pixelia Pictures · AI Creative Contractor</p>
   <h1 class="hero-title">YOUR FAB<br><span class="yellow">WEBSITE</span><br><span class="outline">MADE WITH</span><br>PIXELIA</h1>
-  <p class="hero-sub">
-    AI-powered creative production — <strong>websites, music, avatars, brand visuals, social content, advertising, product videos</strong> — delivered fast, built with the best AI tools available.
-  </p>
+  <p class="hero-sub">AI-powered creative production — <strong>websites, music, avatars, brand visuals, social content, advertising, product videos</strong> — delivered fast, built with the best AI tools available.</p>
 </section>
-
-<!-- WHAT WE BUILD -->
 <section class="what-section">
-  <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">⬡ Deliverables</p>
+  <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">&#x2B21; Deliverables</p>
   <h2 style="font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1;">WHAT PIXELIA BUILDS</h2>
-
   <div class="what-grid">
-    <div class="what-card">
-      <div class="what-num">01</div>
-      <h3 class="what-name">Website</h3>
-      <p class="what-desc">Designed & built with AI — fast, distinctive, yours</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">02</div>
-      <h3 class="what-name">Music</h3>
-      <p class="what-desc">Background music & brand audio — AI-generated tracks</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">03</div>
-      <h3 class="what-name">AI Avatar</h3>
-      <p class="what-desc">Speaking AI avatar — your brand's voice and face</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">04</div>
-      <h3 class="what-name">Brand Visuals</h3>
-      <p class="what-desc">AI-generated imagery — your vision, realized instantly</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">05</div>
-      <h3 class="what-name">Social Content</h3>
-      <p class="what-desc">Images + copy for social media — not account management</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">06</div>
-      <h3 class="what-name">Ad Images</h3>
-      <p class="what-desc">AI advertising visuals — scroll-stopping, on-brand</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">07</div>
-      <h3 class="what-name">Short Video</h3>
-      <p class="what-desc">AI-generated short videos for ads and social</p>
-    </div>
-    <div class="what-card">
-      <div class="what-num">08</div>
-      <h3 class="what-name">Product Video</h3>
-      <p class="what-desc">AI product videos — showcase what you sell</p>
-    </div>
+    <div class="what-card"><div class="what-num">01</div><h3 class="what-name">Website</h3><p class="what-desc">Designed & built with AI — fast, distinctive, yours</p></div>
+    <div class="what-card"><div class="what-num">02</div><h3 class="what-name">Music</h3><p class="what-desc">Background music & brand audio — AI-generated tracks</p></div>
+    <div class="what-card"><div class="what-num">03</div><h3 class="what-name">AI Avatar</h3><p class="what-desc">Speaking AI avatar — your brand's voice and face</p></div>
+    <div class="what-card"><div class="what-num">04</div><h3 class="what-name">Brand Visuals</h3><p class="what-desc">AI-generated imagery — your vision, realized instantly</p></div>
+    <div class="what-card"><div class="what-num">05</div><h3 class="what-name">Social Content</h3><p class="what-desc">Images + copy for social media — not account management</p></div>
+    <div class="what-card"><div class="what-num">06</div><h3 class="what-name">Ad Images</h3><p class="what-desc">AI advertising visuals — scroll-stopping, on-brand</p></div>
+    <div class="what-card"><div class="what-num">07</div><h3 class="what-name">Short Video</h3><p class="what-desc">AI-generated short videos for ads and social</p></div>
+    <div class="what-card"><div class="what-num">08</div><h3 class="what-name">Product Video</h3><p class="what-desc">AI product videos — showcase what you sell</p></div>
   </div>
 </section>
-
-<!-- MEEOW -->
 <section class="meeow-section">
   <div class="meeow-visual">
     <div class="meeow-ring"></div>
@@ -228,42 +187,25 @@
   </div>
   <div class="meeow-text">
     <p class="meeow-name">MEEOW</p>
-    <p class="meeow-desc">
-      Meet <strong>Meeow</strong> — the Pixelia gatekeeper. Every project starts here. Tell us what you need, Meeow lets you in. Your <strong>AI avatar, website, music or video</strong> — delivered in a blink of an eye. 🥃
-    </p>
+    <p class="meeow-desc">Meet <strong>Meeow</strong> — the Pixelia gatekeeper. Every project starts here. Tell us what you need, Meeow lets you in. Your <strong>AI avatar, website, music or video</strong> — delivered in a blink of an eye. 🥃</p>
   </div>
 </section>
-
-<!-- CONTACT FORM -->
 <section class="form-section">
   <div class="form-inner">
-
     <div class="form-left">
       <h2>LET'S<br>BUILD<br><span class="outline">YOURS</span></h2>
       <p>Tell us what you need. We'll come back to you with a proposal. No fluff — just <strong>fast, AI-powered creative delivery.</strong></p>
-
       <div class="process">
-        <div class="process-step">
-          <span class="process-num">01</span>
-          <span class="process-desc">You tell us what to build<br>and leave your email</span>
-        </div>
-        <div class="process-step">
-          <span class="process-num">02</span>
-          <span class="process-desc">Pixelia comes back<br>with a proposal</span>
-        </div>
-        <div class="process-step">
-          <span class="process-num">03</span>
-          <span class="process-desc">We build it<br>in a blink of an eye</span>
-        </div>
+        <div class="process-step"><span class="process-num">01</span><span class="process-desc">You tell us what to build<br>and leave your email</span></div>
+        <div class="process-step"><span class="process-num">02</span><span class="process-desc">Pixelia comes back<br>with a proposal</span></div>
+        <div class="process-step"><span class="process-num">03</span><span class="process-desc">We build it<br>in a blink of an eye</span></div>
       </div>
     </div>
-
     <div class="contact-form">
       <div class="form-group">
         <label class="form-label">Your email</label>
         <input type="email" class="form-input" placeholder="hello@yourbrand.com">
       </div>
-
       <div class="form-group">
         <label class="form-label">What do you need?</label>
         <select class="form-select">
@@ -279,52 +221,40 @@
           <option>Multiple services</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label">Tell us more</label>
         <textarea class="form-textarea" placeholder="Your project, your vision, your deadline..."></textarea>
       </div>
-
       <button class="form-submit">Send to Pixelia →</button>
     </div>
-
   </div>
 </section>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">Pixelia Pictures</div>
   <p class="footer-copy">© 2025 Pixelia Pictures</p>
   <ul class="footer-links">
-    <li><a href="#">Instagram</a></li>
+    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
     <li><a href="pixeliapictures-about.html">About</a></li>
   </ul>
 </footer>
-
 <script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
-  });
-  function animateRing() {
-    rx += (mx - rx - 18) * 0.12;
-    ry += (my - ry - 18) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-6+'px'; cursor.style.top=my-6+'px'; });
+  function animateRing() { rx+=(mx-rx-18)*0.12; ry+=(my-ry-18)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animateRing); }
   animateRing();
   document.querySelectorAll('a, button, .what-card, input, textarea, select').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
-    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+    el.addEventListener('mouseenter', () => { cursor.style.transform='scale(2)'; ring.style.transform='scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform='scale(1)'; ring.style.transform='scale(1)'; });
   });
-  const toggle=document.getElementById('navToggle'),nav=document.getElementById('navLinks');
-  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
-  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const overlay = document.getElementById('menuOverlay');
+  menuBtn.addEventListener('click', () => { overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  closeBtn.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow=''; }));
+  document.addEventListener('keydown', e => { if (e.key==='Escape') { overlay.classList.remove('open'); document.body.style.overflow=''; } });
 </script>
 </body>
 </html>
