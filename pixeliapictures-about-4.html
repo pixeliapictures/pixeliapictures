@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Pixelia Pictures</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #E8FF00;
+    --black: #060606;
+    --dark: #0d0d0d;
+    --mid: #1a1a1a;
+    --white: #f0f0f0;
+    --mono: 'Space Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: var(--body); overflow-x: hidden; cursor: none; }
+  .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
+  @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
+  .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 4px; }
+  .nav-toggle span { display: block; width: 24px; height: 1px; background: var(--yellow); transition: all 0.3s; }
+  .page-header { padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; }
+  .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
+  .page-title { font-family: var(--display); font-size: clamp(72px, 11vw, 150px); line-height: 0.9; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; }
+  .page-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
+  .bio-section { padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: start; }
+  .bio-question { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 40px; }
+  .bio-question .stroke { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.4); }
+  .bio-text { font-size: 16px; line-height: 1.9; color: rgba(240,240,240,0.65); font-weight: 300; margin-bottom: 24px; }
+  .bio-text strong { color: var(--white); font-weight: 500; }
+  .bio-text em { color: var(--yellow); font-style: normal; }
+  .bio-link { color: rgba(232,255,0,0.7); text-decoration: none; border-bottom: 1px solid rgba(232,255,0,0.3); transition: color 0.2s; }
+  .bio-link:hover { color: var(--yellow); }
+  .timeline { display: flex; flex-direction: column; gap: 2px; margin-top: 48px; }
+  .timeline-item { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid rgba(232,255,0,0.08); align-items: baseline; }
+  .timeline-year { font-family: var(--display); font-size: 24px; color: var(--yellow); min-width: 60px; }
+  .timeline-desc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(240,240,240,0.45); line-height: 1.6; }
+  .services-section { padding: 100px 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.08); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .service-card { padding: 32px 28px; background: var(--mid); position: relative; overflow: hidden; transition: all 0.2s; cursor: none; }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--yellow); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease; }
+  .service-card:hover::before { transform: scaleY(1); }
+  .service-card:hover { background: rgba(232,255,0,0.04); }
+  .service-icon { font-family: var(--display); font-size: 40px; color: var(--yellow); opacity: 0.3; margin-bottom: 16px; line-height: 1; }
+  .service-name { font-family: var(--display); font-size: 26px; margin-bottom: 10px; line-height: 1; }
+  .service-desc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.35); line-height: 1.7; text-transform: uppercase; }
+  .cta-section { padding: 100px 48px; text-align: center; border-top: 1px solid rgba(232,255,0,0.08); }
+  .cta-title { font-family: var(--display); font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 32px; }
+  .cta-title .stroke { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
+  .cta-sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.4); margin-bottom: 48px; }
+  .btn-primary { display: inline-block; padding: 18px 48px; background: var(--yellow); color: var(--black); font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: all 0.2s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); cursor: none; }
+  .btn-primary:hover { background: var(--white); transform: translate(-2px, -2px); }
+  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
+  .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--yellow); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-toggle { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(6,6,6,0.98); flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 100px; gap: 28px; z-index: 99; overflow-y: auto; }
+    .nav-links.open { display: flex !important; }
+    .nav-links a { font-size: 13px; opacity: 0.6; }
+    .page-header { padding: 120px 24px 48px; }
+    .bio-section { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-section { padding: 60px 24px; }
+    .cta-section { padding: 60px 24px; }
+    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+    <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+    <li><a href="#" class="active">About</a></li>
+    <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<section class="page-header">
+  <div class="grid-overlay"></div>
+  <p class="page-label">&#x2B21; Pixelia Pictures</p>
+  <h1 class="page-title">WHO IS<br><span class="outline">PIXELIA?</span></h1>
+</section>
+<section class="bio-section">
+  <div>
+    <p class="bio-text"><strong>A creative mind with all tools available.</strong></p>
+    <p class="bio-text">Active since 1995 in graphic design and multimedia. Online since 2005. Now stepping into the next level with AI — as <em>Pixelia.AI</em> and <em>Pixelia Pictures</em>.</p>
+    <p class="bio-text">Available as an <strong>AI creative contractor</strong> — delivering websites, music, AI avatars, brand visuals, social media content, advertising images, short videos and product videos.</p>
+    <p class="bio-text">In a blink of an eye.</p>
+    <p class="bio-text">Photographing since the beginning — digital camera since 2000. 10+ years in film production, including 6 years in London. AI image generation since 2023 with Midjourney.</p>
+    <p class="bio-text">
+      <a href="https://www.linkedin.com/in/korneliahorvath/" target="_blank" class="bio-link">LinkedIn ↗</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="https://www.imdb.com/name/nm7254255/" target="_blank" class="bio-link">IMDB ↗</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="https://nellihorvath.com" target="_blank" class="bio-link">nellihorvath.com ↗</a>
+    </p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">1995</span>
+        <span class="timeline-desc">Graphic Design</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2005</span>
+        <span class="timeline-desc">Pixelia.hu — Web & Design Studio</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2023</span>
+        <span class="timeline-desc">AI Images — Midjourney · Runway</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2024</span>
+        <span class="timeline-desc">AI Print Magazine Publications — Kavyar · January 2024</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2025</span>
+        <span class="timeline-desc">AI Music — Suno · Lia XO</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2026</span>
+        <span class="timeline-desc">AI Video — Kling · Adobe Firefly · Claude on the Rocks</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2 class="bio-question">A CREATIVE<br>MIND WITH<br>ALL <span class="stroke">TOOLS</span><br>AVAILABLE</h2>
+  </div>
+</section>
+<section class="services-section">
+  <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">&#x2B21; What Pixelia Delivers</p>
+  <h2 style="font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 40px;">AS A CONTRACTOR</h2>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">01</div><h3 class="service-name">Website</h3><p class="service-desc">Your future website — designed and built with AI</p></div>
+    <div class="service-card"><div class="service-icon">02</div><h3 class="service-name">Music</h3><p class="service-desc">Background music · Brand audio · AI-generated tracks</p></div>
+    <div class="service-card"><div class="service-icon">03</div><h3 class="service-name">AI Avatar</h3><p class="service-desc">Speaking AI avatar — your brand's voice and face</p></div>
+    <div class="service-card"><div class="service-icon">04</div><h3 class="service-name">Brand Visuals</h3><p class="service-desc">AI-generated brand imagery — your vision, realized</p></div>
+    <div class="service-card"><div class="service-icon">05</div><h3 class="service-name">Social Content</h3><p class="service-desc">Images + copy for social media · Not account management</p></div>
+    <div class="service-card"><div class="service-icon">06</div><h3 class="service-name">Video</h3><p class="service-desc">Advertising · Short videos · Product videos — AI-generated</p></div>
+  </div>
+</section>
+<section class="cta-section">
+  <h2 class="cta-title">YOUR WEBSITE<br><span class="stroke">MADE WITH</span><br>PIXELIA</h2>
+  <p class="cta-sub">Tell us what you need — we deliver it with AI</p>
+  <a href="pixeliapictures-your-website.html" class="btn-primary">Start Your Project →</a>
+</section>
+<footer>
+  <div class="footer-logo">Pixelia Pictures</div>
+  <p class="footer-copy">© 2025 Pixelia Pictures</p>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+    <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
+  </ul>
+</footer>
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx-6+'px';cursor.style.top=my-6+'px';});
+  function animateRing(){rx+=(mx-rx-18)*0.12;ry+=(my-ry-18)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateRing);}
+  animateRing();
+  document.querySelectorAll('a, .service-card').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';ring.style.transform='scale(1.5)';});el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';ring.style.transform='scale(1)';});});
+  const toggle=document.getElementById('navToggle'),nav=document.getElementById('navLinks');
+  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+</script>
+</body>
+</html>
