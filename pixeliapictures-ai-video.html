@@ -19,8 +19,6 @@
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
   .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
-  
-  
   .page-header { padding: 100px 48px 16px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); min-height: auto; display: flex; flex-direction: column; justify-content: flex-end; }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; pointer-events: none; }
   .page-title { font-family: var(--display); font-size: clamp(72px, 11vw, 150px); line-height: 0.9; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; }
@@ -66,16 +64,13 @@
   @media (max-width: 900px) { .project-card { grid-template-columns: 1fr; gap: 48px; } .poster-frame { max-width: 300px; } }
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
-    
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
-    .nav-links a { font-size: 12px; opacity: 0.6; }
     .page-header { padding: 120px 24px 48px; min-height: 50vh; }
     .projects-section { padding: 60px 24px; }
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
   }
-
   .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
   .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
@@ -110,6 +105,28 @@
   </ul>
   <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
 </nav>
+
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <a href="index.html" class="overlay-logo">Pixelia Pictures</a>
+    <button class="close-btn" id="closeBtn">✕</button>
+  </div>
+  <nav class="overlay-nav">
+    <a href="pixeliapictures-ai-images.html">AI Images</a>
+    <a href="#" class="active-link">AI Video</a>
+    <a href="pixeliapictures-ai-music.html">AI Music</a>
+    <a href="pixeliapictures-about.html">About</a>
+    <a href="pixeliapictures-your-website.html" class="cta-link">Your Website</a>
+  </nav>
+  <div class="overlay-bottom">
+    <div class="overlay-info">Pixelia Pictures<br>Budapest, Hungary<br>© 2026</div>
+    <div class="overlay-socials">
+      <a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram ↗</a>
+      <a href="mailto:hello@nellihorvath.com">Contact ↗</a>
+    </div>
+  </div>
+</div>
+
 <section class="page-header">
   <div class="grid-overlay"></div>
   <h1 class="page-title">AI<br><span class="outline">VIDEO</span></h1>
@@ -149,7 +166,7 @@
 </section>
 <footer>
   <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2025 Pixelia Pictures</p>
+  <p class="footer-copy">© 2026 Pixelia Pictures</p>
   <ul class="footer-links">
     <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
     <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
@@ -162,9 +179,13 @@
   function animateRing(){rx+=(mx-rx-18)*0.12;ry+=(my-ry-18)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateRing);}
   animateRing();
   document.querySelectorAll('a').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';ring.style.transform='scale(1.5)';});el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';ring.style.transform='scale(1)';});});
-  const toggle=document.getElementById('navToggle'),nav=document.getElementById('navLinks');
-  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
-  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const overlay = document.getElementById('menuOverlay');
+  menuBtn.addEventListener('click', () => { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  closeBtn.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { overlay.classList.remove('open'); document.body.style.overflow = ''; } });
 </script>
 </body>
 </html>

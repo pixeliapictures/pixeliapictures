@@ -19,20 +19,15 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--white); font-family: var(--body); overflow-x: hidden; cursor: none; }
-
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
-
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--yellow); }
   .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
-  
-  
-
   .page-header { padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; }
   .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; position: relative; z-index: 2; }
@@ -40,18 +35,15 @@
   .page-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
   .page-intro { max-width: 560px; font-size: 15px; line-height: 1.7; color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 32px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.6s forwards; }
   .page-intro strong { color: var(--white); font-weight: 500; }
-
   .stats-bar { display: flex; border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); background: var(--dark); }
   .stat-item { flex: 1; padding: 28px 20px; border-right: 1px solid rgba(232,255,0,0.08); text-align: center; }
   .stat-item:last-child { border-right: none; }
   .stat-num { font-family: var(--display); font-size: 44px; color: var(--yellow); line-height: 1; display: block; }
   .stat-label { font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.4); display: block; margin-top: 4px; }
-
   .section { padding: 100px 48px; }
   .section + .section { border-top: 1px solid rgba(232,255,0,0.08); }
   .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px; }
   .section-title { font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 48px; }
-
   .covers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
   .cover-card { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--mid); cursor: none; }
   .cover-card.featured { grid-column: span 2; }
@@ -68,7 +60,6 @@
   .cover-mag { font-family: var(--display); font-size: 26px; letter-spacing: 0.02em; margin-bottom: 4px; }
   .cover-issue { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.6); margin-bottom: 4px; }
   .cover-credit { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,240,240,0.3); }
-
   .pub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
   .pub-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; background: var(--mid); transition: all 0.2s; cursor: none; gap: 20px; }
   .pub-item:hover { background: rgba(232,255,0,0.06); padding-left: 32px; }
@@ -77,12 +68,10 @@
   .pub-name { font-family: var(--display); font-size: 22px; letter-spacing: 0.01em; transition: color 0.2s; }
   .pub-item:hover .pub-name { color: var(--yellow); }
   .pub-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.07); border: 1px solid rgba(232,255,0,0.15); padding: 4px 10px; white-space: nowrap; }
-
   .adobe-strip { padding: 28px 48px; background: rgba(232,255,0,0.04); border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); display: flex; align-items: center; gap: 24px; }
   .adobe-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.08); border: 1px solid rgba(232,255,0,0.2); padding: 6px 14px; white-space: nowrap; }
   .adobe-text { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(240,240,240,0.4); }
   .adobe-text strong { color: rgba(240,240,240,0.7); }
-
   .wirestock-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .wirestock-body { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 32px; }
   .wirestock-body strong { color: var(--white); font-weight: 500; }
@@ -93,7 +82,6 @@
   .ws-stat { background: var(--mid); padding: 20px; text-align: center; }
   .ws-stat-num { font-family: var(--display); font-size: 36px; color: var(--yellow); display: block; }
   .ws-stat-label { font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.4); }
-
   .platforms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
   .platform-item { display: flex; align-items: center; gap: 16px; padding: 20px 24px; background: var(--mid); text-decoration: none; color: inherit; transition: all 0.2s; cursor: none; }
   .platform-item:hover { background: rgba(232,255,0,0.06); }
@@ -101,30 +89,24 @@
   .platform-icon { font-family: var(--mono); font-size: 9px; color: rgba(232,255,0,0.4); min-width: 16px; }
   .platform-name { font-family: var(--display); font-size: 22px; transition: color 0.2s; }
   .platform-handle { font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; color: rgba(240,240,240,0.3); margin-top: 2px; }
-
   .kavyar-inner { display: flex; align-items: center; justify-content: space-between; gap: 60px; }
   .kavyar-left { max-width: 500px; }
   .kavyar-body { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 28px; }
   .kavyar-body strong { color: var(--white); font-weight: 500; }
   .kavyar-num { font-family: var(--display); font-size: 140px; color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.15); line-height: 1; flex-shrink: 0; }
-
   .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; border: 1px solid rgba(232,255,0,0.3); color: rgba(240,240,240,0.6); font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; cursor: none; }
   .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); background: rgba(232,255,0,0.05); }
-
   footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
   .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--yellow); }
-
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
-    
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
-    .nav-links a { font-size: 16px; opacity: 0.6; }
     .page-header { padding: 120px 24px 48px; }
     .section { padding: 60px 24px; }
     .wirestock-inner { grid-template-columns: 1fr; }
@@ -134,7 +116,6 @@
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
   }
-
   .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
   .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
@@ -171,6 +152,27 @@
   </ul>
   <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
 </nav>
+
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <a href="index.html" class="overlay-logo">Pixelia Pictures</a>
+    <button class="close-btn" id="closeBtn">✕</button>
+  </div>
+  <nav class="overlay-nav">
+    <a href="#" class="active-link">AI Images</a>
+    <a href="pixeliapictures-ai-video.html">AI Video</a>
+    <a href="pixeliapictures-ai-music.html">AI Music</a>
+    <a href="pixeliapictures-about.html">About</a>
+    <a href="pixeliapictures-your-website.html" class="cta-link">Your Website</a>
+  </nav>
+  <div class="overlay-bottom">
+    <div class="overlay-info">Pixelia Pictures<br>Budapest, Hungary<br>© 2026</div>
+    <div class="overlay-socials">
+      <a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram ↗</a>
+      <a href="mailto:hello@nellihorvath.com">Contact ↗</a>
+    </div>
+  </div>
+</div>
 
 <section class="page-header">
   <div class="grid-overlay"></div>
@@ -233,8 +235,6 @@
   </div>
 </section>
 
-
-
 <div class="adobe-strip">
   <span class="adobe-tag">&#x2B21; Licensed</span>
   <p class="adobe-text">AI images distributed via Wirestock to <strong>Adobe Stock</strong> and global platforms — available for commercial licensing worldwide.</p>
@@ -250,7 +250,6 @@
         <p class="award-sub">Creative AI Challenge · Wirestock · 2023</p>
       </div>
       <p class="wirestock-body">Pixelia.AI competes and distributes through Wirestock. Works licensed to <strong>Adobe Stock</strong> and 30+ global platforms. Award won in the first year of AI image generation. <strong>Midjourney since 2023 · 4,000+ images</strong></p>
-
     </div>
     <div></div>
   </div>
@@ -262,45 +261,27 @@
   <div class="platforms-grid">
     <a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Instagram</div>
-        <div class="platform-handle">@pixelia.ai</div>
-      </div>
+      <div><div class="platform-name">Instagram</div><div class="platform-handle">@pixelia.ai</div></div>
     </a>
     <a href="https://www.midjourney.com/@pixelia" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Midjourney</div>
-        <div class="platform-handle">@pixelia</div>
-      </div>
+      <div><div class="platform-name">Midjourney</div><div class="platform-handle">@pixelia</div></div>
     </a>
     <a href="https://wirestock.io/profile/Nelli Horvath/Pixelia" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Wirestock</div>
-        <div class="platform-handle">Nelli Horvath / Pixelia</div>
-      </div>
+      <div><div class="platform-name">Wirestock</div><div class="platform-handle">Nelli Horvath / Pixelia</div></div>
     </a>
     <a href="https://kavyar.com/u0nmzmsqrdgu" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Kavyar</div>
-        <div class="platform-handle">Nelli Horvath</div>
-      </div>
+      <div><div class="platform-name">Kavyar</div><div class="platform-handle">Nelli Horvath</div></div>
     </a>
     <a href="https://www.meta.ai" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Meta.AI</div>
-        <div class="platform-handle">PixeliaPictures</div>
-      </div>
+      <div><div class="platform-name">Meta.AI</div><div class="platform-handle">PixeliaPictures</div></div>
     </a>
     <a href="https://klingai.com/user/PixeliaPictures" target="_blank" class="platform-item">
       <span class="platform-icon">&#x2B21;</span>
-      <div>
-        <div class="platform-name">Kling.AI</div>
-        <div class="platform-handle">PixeliaPictures</div>
-      </div>
+      <div><div class="platform-name">Kling.AI</div><div class="platform-handle">PixeliaPictures</div></div>
     </a>
   </div>
 </section>
@@ -319,7 +300,7 @@
 
 <footer>
   <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2025 Pixelia Pictures — Budapest</p>
+  <p class="footer-copy">© 2026 Pixelia Pictures</p>
   <ul class="footer-links">
     <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
     <li><a href="https://wirestock.io/profile/Nelli Horvath/Pixelia" target="_blank">Wirestock</a></li>
@@ -348,9 +329,13 @@
     el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
     el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
   });
-  const toggle = document.getElementById('navToggle'), nav = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => nav.classList.toggle('open'));
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const overlay = document.getElementById('menuOverlay');
+  menuBtn.addEventListener('click', () => { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  closeBtn.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { overlay.classList.remove('open'); document.body.style.overflow = ''; } });
 </script>
 </body>
 </html>
