@@ -62,6 +62,8 @@
   .footer-links a:hover { color: var(--yellow); }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @media (max-width: 900px) { .project-card { grid-template-columns: 1fr; gap: 48px; } .poster-frame { max-width: 300px; } }
+  .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
+  .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
     .nav-links { display: none !important; }
@@ -71,8 +73,6 @@
     footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
     .footer-links { justify-content: center; }
   }
-  .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
-  .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .menu-overlay.open { opacity: 1; pointer-events: all; }
   .overlay-top { display: flex; justify-content: space-between; align-items: center; }
