@@ -22,7 +22,9 @@
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .container { max-width: 1400px; width: 100%; margin: 0 auto; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; max-width: 1400px; margin: 0 auto; }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
@@ -35,7 +37,7 @@
   .page-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
   .page-intro { max-width: 560px; font-size: 15px; line-height: 1.7; color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 32px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.6s forwards; }
   .page-intro strong { color: var(--white); font-weight: 500; }
-  .stats-bar { display: flex; border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); background: var(--dark); }
+  .stats-bar { border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); background: var(--dark); }
   .stat-item { flex: 1; padding: 28px 20px; border-right: 1px solid rgba(232,255,0,0.08); text-align: center; }
   .stat-item:last-child { border-right: none; }
   .stat-num { font-family: var(--display); font-size: 44px; color: var(--yellow); line-height: 1; display: block; }
@@ -65,11 +67,11 @@
   .pub-name { font-family: var(--display); font-size: 22px; letter-spacing: 0.01em; transition: color 0.2s; }
   .pub-item:hover .pub-name { color: var(--yellow); }
   .pub-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.07); border: 1px solid rgba(232,255,0,0.15); padding: 4px 10px; white-space: nowrap; }
-  .adobe-strip { padding: 28px 48px; background: rgba(232,255,0,0.04); border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); display: flex; align-items: center; gap: 24px; }
+  .adobe-strip { padding: 28px 48px; background: rgba(232,255,0,0.04); border-top: 1px solid rgba(232,255,0,0.1); border-bottom: 1px solid rgba(232,255,0,0.1); }
   .adobe-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,255,0,0.5); background: rgba(232,255,0,0.08); border: 1px solid rgba(232,255,0,0.2); padding: 6px 14px; white-space: nowrap; }
   .adobe-text { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(240,240,240,0.4); }
   .adobe-text strong { color: rgba(240,240,240,0.7); }
-  .wirestock-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .wirestock-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1400px; margin: 0 auto; }
   .wirestock-body { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 32px; }
   .wirestock-body strong { color: var(--white); font-weight: 500; }
   .award-box { background: var(--mid); padding: 28px; border-left: 3px solid var(--yellow); margin-bottom: 24px; }
@@ -86,14 +88,15 @@
   .platform-icon { font-family: var(--mono); font-size: 9px; color: rgba(232,255,0,0.4); min-width: 16px; }
   .platform-name { font-family: var(--display); font-size: 22px; transition: color 0.2s; }
   .platform-handle { font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; color: rgba(240,240,240,0.3); margin-top: 2px; }
-  .kavyar-inner { display: flex; align-items: center; justify-content: space-between; gap: 60px; }
+  .kavyar-inner { display: flex; align-items: center; justify-content: space-between; gap: 60px; max-width: 1400px; margin: 0 auto; }
   .kavyar-left { max-width: 500px; }
   .kavyar-body { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; margin-bottom: 28px; }
   .kavyar-body strong { color: var(--white); font-weight: 500; }
   .kavyar-num { font-family: var(--display); font-size: 140px; color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.15); line-height: 1; flex-shrink: 0; }
   .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; border: 1px solid rgba(232,255,0,0.3); color: rgba(240,240,240,0.6); font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; cursor: none; }
   .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); background: rgba(232,255,0,0.05); }
-  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
@@ -102,19 +105,22 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
   .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
+  @media (max-width: 1024px) {
+    .covers-grid { grid-template-columns: repeat(2, 1fr); }
+    .cover-card.featured { grid-column: span 2; }
+    .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+    .nav-bar { padding: 20px 24px; }
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
     .page-header { padding: 120px 24px 48px; }
     .section { padding: 60px 24px; }
-    .covers-grid { grid-template-columns: repeat(2, 1fr); }
-    .cover-card.featured { grid-column: span 2; }
     .wirestock-inner { grid-template-columns: 1fr; }
     .kavyar-inner { flex-direction: column; }
     .kavyar-num { font-size: 80px; }
-    .platforms-grid { grid-template-columns: 1fr 1fr; }
-    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-links { justify-content: center; }
   }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
@@ -141,15 +147,17 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a href="index.html" class="nav-logo">Pixelia Pictures</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#" class="active">AI Images</a></li>
-    <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
-    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
-    <li><a href="pixeliapictures-about.html">About</a></li>
-    <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
-  </ul>
-  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="active">AI Images</a></li>
+      <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+      <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="pixeliapictures-about.html">About</a></li>
+      <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  </div>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -175,19 +183,24 @@
 
 <section class="page-header">
   <div class="grid-overlay"></div>
-  <p class="page-label">&#x2B21; Pixelia Pictures</p>
-  <h1 class="page-title">AI<br><span class="outline">IMAGES</span></h1>
-  <p class="page-intro">Midjourney-generated visuals by <strong>Nelli Horváth / Pixelia.AI</strong> — published in international print magazines since January 2024, licensed through Wirestock to Adobe Stock and global platforms. Award-winning. Since 2023.</p>
+  <div class="container">
+    <p class="page-label">&#x2B21; Pixelia Pictures</p>
+    <h1 class="page-title">AI<br><span class="outline">IMAGES</span></h1>
+    <p class="page-intro">Midjourney-generated visuals by <strong>Nelli Horváth / Pixelia.AI</strong> — published in international print magazines since January 2024, licensed through Wirestock to Adobe Stock and global platforms. Award-winning. Since 2023.</p>
+  </div>
 </section>
 
 <div class="stats-bar">
+  <div class="container" style="display: flex;">
   <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Print AI Mag Covers</span></div>
   <div class="stat-item"><span class="stat-num">9+</span><span class="stat-label">AI Print Mag Publications</span></div>
   <div class="stat-item"><span class="stat-num">2ND <span style="font-size:0.4em; opacity:0.7;">Place</span></span><span class="stat-label">Wirestock Challenge</span></div>
   <div class="stat-item"><span class="stat-num">2023</span><span class="stat-label">AI Image Generation Started</span></div>
+  </div>
 </div>
 
 <section class="section">
+  <div class="container">
   <p class="section-label">&#x2B21; Print Publications</p>
   <h2 class="section-title">MAGAZINE COVERS</h2>
   <div class="covers-grid">
@@ -240,11 +253,14 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <div class="adobe-strip">
-  <span class="adobe-tag">&#x2B21; Licensed</span>
-  <p class="adobe-text">AI images distributed via Wirestock to <strong>Adobe Stock</strong> and global platforms — available for commercial licensing worldwide.</p>
+  <div class="container" style="display: flex; align-items: center; gap: 24px;">
+    <span class="adobe-tag">&#x2B21; Licensed</span>
+    <p class="adobe-text">AI images distributed via Wirestock to <strong>Adobe Stock</strong> and global platforms — available for commercial licensing worldwide.</p>
+  </div>
 </div>
 
 <section class="section" style="background: var(--dark);">
@@ -263,6 +279,7 @@
 </section>
 
 <section class="section">
+  <div class="container">
   <p class="section-label">&#x2B21; Find Pixelia.AI</p>
   <h2 class="section-title">ON EVERY<br>PLATFORM</h2>
   <div class="platforms-grid">
@@ -291,6 +308,7 @@
       <div><div class="platform-name">Kling.AI</div><div class="platform-handle">PixeliaPictures</div></div>
     </a>
   </div>
+  </div>
 </section>
 
 <section class="section" style="background: var(--dark); border-top: 1px solid rgba(232,255,0,0.08);">
@@ -306,13 +324,15 @@
 </section>
 
 <footer>
-  <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2026 Pixelia Pictures</p>
-  <ul class="footer-links">
-    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
-    <li><a href="https://wirestock.io/profile/Nelli Horvath/Pixelia" target="_blank">Wirestock</a></li>
-    <li><a href="https://kavyar.com/u0nmzmsqrdgu" target="_blank">Kavyar</a></li>
-  </ul>
+  <div class="footer-inner">
+    <div class="footer-logo">Pixelia Pictures</div>
+    <p class="footer-copy">© 2026 Pixelia Pictures</p>
+    <ul class="footer-links">
+      <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+      <li><a href="https://wirestock.io/profile/Nelli Horvath/Pixelia" target="_blank">Wirestock</a></li>
+      <li><a href="https://kavyar.com/u0nmzmsqrdgu" target="_blank">Kavyar</a></li>
+    </ul>
+  </div>
 </footer>
 
 <script>

@@ -13,7 +13,9 @@
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .container { max-width: 1400px; width: 100%; margin: 0 auto; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; max-width: 1400px; margin: 0 auto; }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
@@ -53,7 +55,8 @@
   .status-dot { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
 
-  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
@@ -65,12 +68,13 @@
   .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
   .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+    .nav-bar { padding: 20px 24px; }
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
     .page-header { padding: 60px 24px 32px; }
     .projects-section { padding: 60px 24px; }
-    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-links { justify-content: center; }
   }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
@@ -95,15 +99,17 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 <nav>
-  <a href="index.html" class="nav-logo">Pixelia Pictures</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
-    <li><a href="pixeliapictures-ai-video.html" class="active">AI Video</a></li>
-    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
-    <li><a href="pixeliapictures-about.html">About</a></li>
-    <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
-  </ul>
-  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+      <li><a href="pixeliapictures-ai-video.html" class="active">AI Video</a></li>
+      <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="pixeliapictures-about.html">About</a></li>
+      <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  </div>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -136,10 +142,13 @@
 
 <section class="page-header">
   <div class="grid-overlay"></div>
-  <h1 class="page-title">AI<br><span class="outline">VIDEO</span></h1>
+  <div class="container">
+    <h1 class="page-title">AI<br><span class="outline">VIDEO</span></h1>
+  </div>
 </section>
 
 <section class="projects-section">
+  <div class="container">
   <p class="section-label">Latest Release</p>
   <div class="project-card">
     <div class="project-info">
@@ -161,15 +170,18 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <footer>
-  <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2026 Pixelia Pictures</p>
-  <ul class="footer-links">
-    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
-    <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
-  </ul>
+  <div class="footer-inner">
+    <div class="footer-logo">Pixelia Pictures</div>
+    <p class="footer-copy">© 2026 Pixelia Pictures</p>
+    <ul class="footer-links">
+      <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+      <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
+    </ul>
+  </div>
 </footer>
 
 <script>

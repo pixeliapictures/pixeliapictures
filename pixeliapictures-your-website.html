@@ -22,8 +22,9 @@
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
+  .container { max-width: 1400px; width: 100%; margin: 0 auto; }
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(6,6,6,1); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
-  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 22px 48px; }
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 22px 48px; max-width: 1400px; margin: 0 auto; }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
@@ -49,7 +50,6 @@
   .overlay-socials a:hover { color: var(--yellow); }
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 160px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(232,255,0,0.1); }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,255,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,0,0.025) 1px, transparent 1px); background-size: 80px 80px; }
-  .hero-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--display); font-size: 28vw; color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.04); white-space: nowrap; pointer-events: none; z-index: 0; }
   .hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 24px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
   .hero-title { font-family: var(--display); font-size: clamp(64px, 10vw, 140px); line-height: 0.92; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; margin-bottom: 40px; }
   .hero-title .yellow { color: var(--yellow); }
@@ -66,7 +66,7 @@
   .what-name { font-family: var(--display); font-size: 22px; margin-bottom: 10px; line-height: 1; transition: color 0.2s; }
   .what-card:hover .what-name { color: var(--yellow); }
   .what-desc { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; color: rgba(240,240,240,0.3); line-height: 1.7; text-transform: uppercase; }
-  .meeow-section { padding: 80px 48px; display: flex; align-items: center; gap: 80px; border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .meeow-section { padding: 80px 48px; display: flex; align-items: center; gap: 80px; border-bottom: 1px solid rgba(232,255,0,0.08); max-width: 1400px; margin: 0 auto; }
   .meeow-visual { flex-shrink: 0; width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; }
   .meeow-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(232,255,0,0.15); animation: spin 12s linear infinite; }
   .meeow-ring-2 { inset: 20px; border-color: rgba(232,255,0,0.08); animation: spin 8s linear infinite reverse; }
@@ -78,7 +78,7 @@
   .meeow-desc { font-size: 15px; line-height: 1.8; color: rgba(240,240,240,0.55); font-weight: 300; max-width: 500px; }
   .meeow-desc strong { color: var(--white); font-weight: 500; }
   .form-section { padding: 100px 48px; }
-  .form-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+  .form-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; max-width: 1400px; margin: 0 auto; }
   .form-left h2 { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 24px; }
   .form-left h2 .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.35); }
   .form-left p { font-size: 14px; line-height: 1.8; color: rgba(240,240,240,0.5); font-weight: 300; margin-bottom: 40px; }
@@ -98,13 +98,17 @@
   .form-select option { background: var(--mid); }
   .form-submit { margin-top: 8px; padding: 18px 40px; background: var(--yellow); color: var(--black); font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; border: none; font-weight: 700; cursor: none; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); transition: all 0.2s; align-self: flex-start; }
   .form-submit:hover { background: var(--white); transform: translate(-2px, -2px); }
-  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
   .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--yellow); }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 1024px) {
+    .what-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 768px) {
     .nav-bar { padding: 18px 24px; }
     .nav-links { display: none !important; }
@@ -115,7 +119,8 @@
     .meeow-section { flex-direction: column; padding: 60px 24px; }
     .form-section { padding: 60px 24px; }
     .form-inner { grid-template-columns: 1fr; gap: 48px; }
-    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-links { justify-content: center; }
   }
 </style>
@@ -160,12 +165,14 @@
 </div>
 <section class="hero">
   <div class="grid-overlay"></div>
-  <div class="hero-bg-text">PIXELIA</div>
-  <p class="hero-label">&#x2B21; Pixelia Pictures · AI Creative Contractor</p>
-  <h1 class="hero-title">YOUR FAB<br><span class="yellow">WEBSITE</span><br><span class="outline">MADE WITH</span><br>PIXELIA</h1>
-  <p class="hero-sub">AI-powered creative production — <strong>websites, music, avatars, brand visuals, social content, advertising, product videos</strong> — delivered fast, built with the best AI tools available.</p>
+  <div class="container">
+    <p class="hero-label">&#x2B21; Pixelia Pictures · AI Creative Contractor</p>
+    <h1 class="hero-title">YOUR FAB<br><span class="yellow">WEBSITE</span><br><span class="outline">MADE WITH</span><br>PIXELIA</h1>
+    <p class="hero-sub">AI-powered creative production — <strong>websites, music, avatars, brand visuals, social content, advertising, product videos</strong> — delivered fast, built with the best AI tools available.</p>
+  </div>
 </section>
 <section class="what-section">
+  <div class="container">
   <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">&#x2B21; Deliverables</p>
   <h2 style="font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1;">WHAT PIXELIA BUILDS</h2>
   <div class="what-grid">
@@ -177,6 +184,7 @@
     <div class="what-card"><div class="what-num">06</div><h3 class="what-name">Ad Images</h3><p class="what-desc">AI advertising visuals — scroll-stopping, on-brand</p></div>
     <div class="what-card"><div class="what-num">07</div><h3 class="what-name">Short Video</h3><p class="what-desc">AI-generated short videos for ads and social</p></div>
     <div class="what-card"><div class="what-num">08</div><h3 class="what-name">Product Video</h3><p class="what-desc">AI product videos — showcase what you sell</p></div>
+  </div>
   </div>
 </section>
 <section class="meeow-section">
@@ -230,12 +238,14 @@
   </div>
 </section>
 <footer>
-  <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2025 Pixelia Pictures</p>
-  <ul class="footer-links">
-    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
-    <li><a href="pixeliapictures-about.html">About</a></li>
-  </ul>
+  <div class="footer-inner">
+    <div class="footer-logo">Pixelia Pictures</div>
+    <p class="footer-copy">© 2025 Pixelia Pictures</p>
+    <ul class="footer-links">
+      <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+      <li><a href="pixeliapictures-about.html">About</a></li>
+    </ul>
+  </div>
 </footer>
 <script>
   const cursor = document.getElementById('cursor');

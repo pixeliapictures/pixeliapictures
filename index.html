@@ -21,6 +21,9 @@
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--white); font-family: var(--body); overflow-x: hidden; cursor: none; }
 
+  /* ── LAYOUT CONTAINER ── */
+  .container { max-width: 1400px; width: 100%; margin: 0 auto; }
+
   /* ── CURSOR ── */
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor.no-blend { mix-blend-mode: normal; opacity: 0; }
@@ -36,7 +39,7 @@
   }
   .nav-bar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 22px 48px;
+    padding: 22px 48px; max-width: 1400px; margin: 0 auto;
   }
   .nav-logo {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
@@ -216,6 +219,7 @@
   footer {
     padding: 48px; background: var(--black);
     display: flex; justify-content: space-between; align-items: center;
+    max-width: 1400px; margin: 0 auto;
   }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
@@ -298,12 +302,14 @@
 <!-- HERO -->
 <section class="hero">
   <div class="grid-overlay"></div>
-  <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
-  <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
-  <p class="hero-sub">AI-generated images, music and short films — created by Pixelia Pictures.</p>
-  <div class="scroll-hint">
-    <span>Scroll to explore</span>
-    <div class="scroll-line"></div>
+  <div class="container">
+    <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
+    <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
+    <p class="hero-sub">AI-generated images, music and short films — created by Pixelia Pictures.</p>
+    <div class="scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
   </div>
 </section>
 

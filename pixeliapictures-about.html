@@ -22,7 +22,9 @@
   .cursor { position: fixed; width: 12px; height: 12px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.1s ease; }
   .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9998; mix-blend-mode: difference; transition: all 0.15s ease; }
   @media (hover: none) { .cursor, .cursor-ring { display: none !important; } body { cursor: auto !important; } }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .container { max-width: 1400px; width: 100%; margin: 0 auto; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(6,6,6,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,255,0,0.08); }
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; max-width: 1400px; margin: 0 auto; }
   .nav-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; opacity: 0.5; transition: opacity 0.2s, color 0.2s; }
@@ -33,7 +35,7 @@
   .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
   .page-title { font-family: var(--display); font-size: clamp(72px, 11vw, 150px); line-height: 0.9; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; }
   .page-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
-  .bio-section { padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: start; }
+  .bio-section { padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: start; max-width: 1400px; margin: 0 auto; }
   .bio-question { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); line-height: 1; margin-bottom: 40px; }
   .bio-question .stroke { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.4); }
   .bio-text { font-size: 16px; line-height: 1.9; color: rgba(240,240,240,0.65); font-weight: 300; margin-bottom: 24px; }
@@ -54,13 +56,14 @@
   .service-icon { font-family: var(--display); font-size: 40px; color: var(--yellow); opacity: 0.3; margin-bottom: 16px; line-height: 1; }
   .service-name { font-family: var(--display); font-size: 26px; margin-bottom: 10px; line-height: 1; }
   .service-desc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.35); line-height: 1.7; text-transform: uppercase; }
-  .cta-section { padding: 100px 48px; text-align: center; border-top: 1px solid rgba(232,255,0,0.08); }
+  .cta-section { padding: 100px 48px; text-align: center; border-top: 1px solid rgba(232,255,0,0.08); max-width: 1400px; margin: 0 auto; }
   .cta-title { font-family: var(--display); font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 32px; }
   .cta-title .stroke { color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.3); }
   .cta-sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.4); margin-bottom: 48px; }
   .btn-primary { display: inline-block; padding: 18px 48px; background: var(--yellow); color: var(--black); font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: all 0.2s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); cursor: none; }
   .btn-primary:hover { background: var(--white); transform: translate(-2px, -2px); }
-  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+  footer { padding: 48px; background: var(--dark); border-top: 1px solid rgba(232,255,0,0.15); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
   .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
   .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
@@ -69,8 +72,11 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; align-items: center; gap: 5px; transition: opacity 0.2s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; min-width: 44px; min-height: 44px; justify-content: center; }
   .menu-btn .bar { display: block; width: 24px; height: 1px; background: var(--yellow); }
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+    .nav-bar { padding: 20px 24px; }
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
     .page-header { padding: 120px 24px 48px; }
@@ -78,7 +84,8 @@
     .services-grid { grid-template-columns: 1fr; }
     .services-section { padding: 60px 24px; }
     .cta-section { padding: 60px 24px; }
-    footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-links { justify-content: center; }
   }
   .menu-overlay { position: fixed; inset: 0; background: #000; z-index: 500; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 24px 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
@@ -103,15 +110,17 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 <nav>
-  <a href="index.html" class="nav-logo">Pixelia Pictures</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
-    <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
-    <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
-    <li><a href="#" class="active">About</a></li>
-    <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
-  </ul>
-  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Pixelia Pictures</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
+      <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
+      <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="#" class="active">About</a></li>
+      <li><a href="pixeliapictures-your-website.html" class="cta">Your Website ↗</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  </div>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -137,8 +146,10 @@
 
 <section class="page-header">
   <div class="grid-overlay"></div>
-  <p class="page-label">&#x2B21; Pixelia Pictures</p>
-  <h1 class="page-title">WHO IS<br><span class="outline">PIXELIA?</span></h1>
+  <div class="container">
+    <p class="page-label">&#x2B21; Pixelia Pictures</p>
+    <h1 class="page-title">WHO IS<br><span class="outline">PIXELIA?</span></h1>
+  </div>
 </section>
 <section class="bio-section">
   <div>
@@ -186,15 +197,17 @@
   </div>
 </section>
 <section class="services-section">
-  <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">&#x2B21; What Pixelia Delivers</p>
-  <h2 style="font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 40px;">AS A CONTRACTOR</h2>
-  <div class="services-grid">
-    <div class="service-card"><div class="service-icon">01</div><h3 class="service-name">Website</h3><p class="service-desc">Your future website — designed and built with AI</p></div>
-    <div class="service-card"><div class="service-icon">02</div><h3 class="service-name">Music</h3><p class="service-desc">Background music · Brand audio · AI-generated tracks</p></div>
-    <div class="service-card"><div class="service-icon">03</div><h3 class="service-name">AI Avatar</h3><p class="service-desc">Speaking AI avatar — your brand's voice and face</p></div>
-    <div class="service-card"><div class="service-icon">04</div><h3 class="service-name">Brand Visuals</h3><p class="service-desc">AI-generated brand imagery — your vision, realized</p></div>
-    <div class="service-card"><div class="service-icon">05</div><h3 class="service-name">Social Content</h3><p class="service-desc">Images + copy for social media · Not account management</p></div>
-    <div class="service-card"><div class="service-icon">06</div><h3 class="service-name">Video</h3><p class="service-desc">Advertising · Short videos · Product videos — AI-generated</p></div>
+  <div class="container">
+    <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;">&#x2B21; What Pixelia Delivers</p>
+    <h2 style="font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; margin-bottom: 40px;">AS A CONTRACTOR</h2>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">01</div><h3 class="service-name">Website</h3><p class="service-desc">Your future website — designed and built with AI</p></div>
+      <div class="service-card"><div class="service-icon">02</div><h3 class="service-name">Music</h3><p class="service-desc">Background music · Brand audio · AI-generated tracks</p></div>
+      <div class="service-card"><div class="service-icon">03</div><h3 class="service-name">AI Avatar</h3><p class="service-desc">Speaking AI avatar — your brand's voice and face</p></div>
+      <div class="service-card"><div class="service-icon">04</div><h3 class="service-name">Brand Visuals</h3><p class="service-desc">AI-generated brand imagery — your vision, realized</p></div>
+      <div class="service-card"><div class="service-icon">05</div><h3 class="service-name">Social Content</h3><p class="service-desc">Images + copy for social media · Not account management</p></div>
+      <div class="service-card"><div class="service-icon">06</div><h3 class="service-name">Video</h3><p class="service-desc">Advertising · Short videos · Product videos — AI-generated</p></div>
+    </div>
   </div>
 </section>
 <section class="cta-section">
@@ -203,12 +216,14 @@
   <a href="pixeliapictures-your-website.html" class="btn-primary">Start Your Project →</a>
 </section>
 <footer>
-  <div class="footer-logo">Pixelia Pictures</div>
-  <p class="footer-copy">© 2026 Pixelia Pictures</p>
-  <ul class="footer-links">
-    <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
-    <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
-  </ul>
+  <div class="footer-inner">
+    <div class="footer-logo">Pixelia Pictures</div>
+    <p class="footer-copy">© 2026 Pixelia Pictures</p>
+    <ul class="footer-links">
+      <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+      <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
+    </ul>
+  </div>
 </footer>
 <script>
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
