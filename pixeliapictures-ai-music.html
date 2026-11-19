@@ -186,7 +186,14 @@
     </a>
   </section>
 
-  <div style="border-top: 1px solid rgba(232,255,0,0.08); background:rgba(232,255,0,0.02);"></div>
+  <section class="section" style="border-top: 1px solid rgba(232,255,0,0.08); background:rgba(232,255,0,0.02); display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <p class="section-label" style="align-self:flex-start;">⬡ Video · No Sleep</p>
+    <div style="width:100%; max-width:420px;">
+      <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-align="center">
+        <a href="https://x.com/pixeliapictures/status/2122495947762733321">Lia XO · No Sleep, watch on X</a>
+      </blockquote>
+    </div>
+  </section>
 
   <section class="section" style="border-top: 1px solid rgba(232,255,0,0.08);">
     <p class="section-label">⬡ Singles & EPs</p>
@@ -253,5 +260,6 @@
   overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; }));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { overlay.classList.remove('open'); document.body.style.overflow = ''; } });
 </script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
