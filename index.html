@@ -233,7 +233,7 @@
 
   /* ── CODE SECTION ── */
   :root { --neon: #39FF14; }
-  .code-zone { position: relative; z-index: 2; overflow: visible; background: #000; padding: 40px 48px 24px; }
+  .code-zone { position: relative; overflow: visible; background: #000; padding: 40px 48px 24px; }
   .code-zone .container { position: relative; z-index: 1; }
   .terminal {
     max-width: 640px; background: #000;
@@ -275,6 +275,10 @@
             mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
   }
   @media (max-width: 768px) { .hopper { width: 57%; right: -2%; } }
+
+
+  .splash { position: absolute; left: 0; top: 0; height: 95%; width: auto; z-index: 4; mix-blend-mode: lighten; pointer-events: none; }
+  @media (max-width: 900px) { .splash { height: 70%; } }
 
   /* ── FOOTER ── */
   footer {
@@ -371,6 +375,7 @@
     <source src="images/tennis-loop-1080.mp4" type="video/mp4">
   </video>
   <div class="hero-shade"></div>
+  <video class="splash" autoplay muted loop playsinline preload="auto" poster="images/splash-poster.jpg" aria-hidden="true"><source src="images/splash-loop.mp4" type="video/mp4"></video>
 <a href="#explore" class="scroll-hint" style="text-decoration:none">
       <span>Scroll to explore</span>
       <div class="scroll-line"></div>
