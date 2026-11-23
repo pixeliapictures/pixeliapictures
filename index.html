@@ -39,10 +39,10 @@
   }
   .nav-bar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 22px 48px; max-width: 1400px; margin: 0 auto;
+    padding: 8px 48px; max-width: 1400px; margin: 0 auto;
   }
   .nav-logo {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.2em;
     text-transform: uppercase; color: var(--yellow); text-decoration: none;
   }
   .nav-links {
@@ -75,7 +75,7 @@
   .ticker-wrap {
     overflow: hidden;
     border-top: 1px solid rgba(232,255,0,0.06);
-    padding: 7px 0;
+    padding: 4px 0;
     background: rgba(6,6,6,1);
   }
   .ticker-track {
@@ -113,7 +113,7 @@
     display: flex; justify-content: space-between; align-items: center;
   }
   .overlay-logo {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.2em;
     text-transform: uppercase; color: var(--yellow);
   }
   .close-btn {
@@ -167,64 +167,114 @@
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column;
-    justify-content: flex-end; padding: 150px 48px 56px; position: relative; overflow: hidden;
+    min-height: 86vh; min-height: 86svh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 96px 48px 32px; position: relative; overflow: hidden;
     background: #000;
   }
   .hero-video {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0; background: #000;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 72%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 72%, transparent 100%);
     opacity: 0; animation: fadeIn 1.2s ease 0.1s forwards;
   }
   .hero-shade {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0) 60%);
+    background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0) 55%);
   }
   .hero .container { position: relative; z-index: 2; }
   @keyframes fadeIn { to { opacity: 1; } }
   .grid-overlay { display: none; }
   .hero-label {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--yellow); margin-bottom: 20px;
+    text-transform: uppercase; color: var(--yellow); margin-bottom: 10px;
     position: relative; z-index: 2;
     opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
   }
   .hero-title {
     font-family: var(--display); font-size: clamp(80px, 14vw, 200px);
-    line-height: 0.88; position: relative; z-index: 2;
+    line-height: 0.85; position: relative; z-index: 2;
     opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
   }
   .hero-title .outline {
     color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.25);
   }
   .hero-sub {
-    max-width: 520px; font-size: 15px; line-height: 1.7;
-    color: rgba(240,240,240,0.5); font-weight: 300; margin-top: 40px;
+    max-width: min(430px, 45%); font-size: clamp(18px, 2vw, 24px); line-height: 1.3; text-align: left;
+    color: rgba(240,240,240,0.5); font-weight: 300; margin: 0 0 28px;
     position: relative; z-index: 2;
     opacity: 0; animation: fadeUp 0.6s ease 0.7s forwards;
   }
 
   .scroll-hint {
-    position: relative; z-index: 2; margin-top: 52px;
-    display: flex; align-items: center; gap: 12px;
+    position: absolute; z-index: 3; right: 40px; bottom: 48px; top: 120px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
     opacity: 0; animation: fadeUp 0.6s ease 1s forwards;
   }
   .scroll-hint span {
-    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
-    text-transform: uppercase; color: rgba(232,255,0,0.4);
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(232,255,0,0.6); white-space: nowrap;
+    writing-mode: vertical-rl;
   }
   .scroll-line {
-    width: 40px; height: 1px; background: rgba(232,255,0,0.25);
+    flex: 1; width: 1px; height: auto; background: rgba(232,255,0,0.25);
     position: relative; overflow: hidden;
   }
   .scroll-line::after {
-    content: ''; position: absolute; top: 0; left: -100%;
+    content: ''; position: absolute; left: 0; top: -100%;
     width: 100%; height: 100%; background: var(--yellow);
     animation: scanline 2s ease-in-out infinite;
   }
+  .scroll-hint .scroll-arrow { writing-mode: horizontal-tb; letter-spacing: 0; font-size: 16px; color: var(--yellow); margin-top: -6px; }
   @keyframes scanline {
-    0% { left: -100%; } 100% { left: 100%; }
+    0% { top: -100%; } 100% { top: 100%; }
   }
+
+
+  /* ── CODE SECTION ── */
+  :root { --neon: #39FF14; }
+  .code-zone { position: relative; z-index: 2; overflow: visible; background: #000; padding: 40px 48px 24px; }
+  .code-zone .container { position: relative; z-index: 1; }
+  .terminal {
+    max-width: 640px; background: #000;
+    border: 1px solid rgba(57,255,20,0.25); border-radius: 10px;
+    box-shadow: none;
+    font-family: var(--mono); font-size: 14px; line-height: 1.55; color: rgba(240,240,240,0.85);
+  }
+  .term-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(57,255,20,0.12); }
+  .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); display: block; }
+  .term-bar span { margin-left: 10px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.35); }
+  .term-body { padding: 16px 20px 18px; min-height: 0; white-space: pre-wrap; word-break: break-word; }
+  .term-body { height: calc(11 * 1.55em + 34px); overflow: hidden; }
+  .term-body .p { color: var(--neon); }
+  .term-body .y { color: var(--yellow); }
+  .term-body .d { color: rgba(240,240,240,0.4); }
+  .caret { display: inline-block; width: 8px; height: 1.1em; background: var(--neon); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .wave-wrap { position: relative; height: 90px; margin-top: 24px; }
+  .wave { position: absolute; inset: 0; width: 100%; height: 100%; }
+  @media (max-width: 768px) {
+    .hero { min-height: 72svh; }
+    .scroll-hint { right: 14px; top: 100px; bottom: 36px; }
+    .scroll-hint span { font-size: 10px; }
+    .code-zone { padding: 16px 24px 12px; }
+    .hero-sub { max-width: 58%; font-size: 18px; }
+    .terminal { font-size: 12px; line-height: 1.45; }
+    .term-body { padding: 12px 16px 14px; height: calc(11 * 1.45em + 26px); }
+    .wave-wrap { height: 64px; margin-top: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+
+  .term-wrap { position: relative; max-width: 640px; }
+  .term-wrap .terminal { position: relative; z-index: 2; }
+  .hopper {
+    position: absolute; right: -8%; bottom: calc(100% - 1px); width: 49%; z-index: 1;
+    mix-blend-mode: lighten; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+  }
+  @media (max-width: 768px) { .hopper { width: 57%; right: -2%; } }
 
   /* ── FOOTER ── */
   footer {
@@ -232,10 +282,10 @@
     display: flex; justify-content: space-between; align-items: center;
     max-width: 1400px; margin: 0 auto;
   }
-  .footer-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
-  .footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: rgba(240,240,240,0.2); text-transform: uppercase; }
+  .footer-logo { font-family: var(--mono); font-size: 13px; letter-spacing: 0.25em; color: var(--yellow); text-transform: uppercase; }
+  .footer-copy { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: rgba(240,240,240,0.4); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
-  .footer-links a { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.6); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--yellow); }
 
   @keyframes fadeUp {
@@ -245,10 +295,10 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .nav-bar { padding: 18px 24px; }
+    .nav-bar { padding: 4px 16px 4px 24px; }
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
-    .hero { padding: 140px 24px 44px; }
+    .hero { padding: 80px 24px 20px; }
     .hero-title { font-size: clamp(44px, 13vw, 90px); }
     footer { flex-direction: column; gap: 12px; padding: 32px 24px; text-align: center; align-items: center; }
     .footer-links { justify-content: center; }
@@ -268,6 +318,7 @@
       <li><a href="pixeliapictures-ai-images.html">AI Images</a></li>
       <li><a href="pixeliapictures-ai-video.html">AI Video</a></li>
       <li><a href="pixeliapictures-ai-music.html">AI Music</a></li>
+      <li><a href="pixeliapictures-ai-video.html#ugc">UGC</a></li>
       <li><a href="pixeliapictures-about.html">About</a></li>
       <li><a href="pixeliapictures-your-website.html" class="cta">Your Website</a></li>
     </ul>
@@ -280,8 +331,8 @@
   <!-- TICKER -->
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona</span>
-      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona</span>
+      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>UGC videos for brands<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona</span>
+      <span class="ticker-item">Pixelia Pictures AI Studio<span class="dot">✦</span>AI Images for web, social &amp; print<span class="dot">✦</span>AI Video — product ads &amp; music videos<span class="dot">✦</span>UGC videos for brands<span class="dot">✦</span>AI Avatars<span class="dot">✦</span>AI Music &amp; background tracks<span class="dot">✦</span>Lia XO — AI singer persona</span>
     </div>
   </div>
 </nav>
@@ -296,6 +347,7 @@
     <a href="pixeliapictures-ai-images.html">AI Images</a>
     <a href="pixeliapictures-ai-video.html">AI Video</a>
     <a href="pixeliapictures-ai-music.html">AI Music</a>
+    <a href="pixeliapictures-ai-video.html#ugc">UGC</a>
     <a href="pixeliapictures-about.html">About</a>
     <a href="pixeliapictures-your-website.html" class="cta-link">Your Website</a>
   </nav>
@@ -305,6 +357,8 @@
     </div>
     <div class="overlay-socials">
       <a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram ↗</a>
+      <a href="https://x.com/PixeliaPictures" target="_blank">X ↗</a>
+      <a href="https://www.linkedin.com/in/korneliahorvath/" target="_blank">LinkedIn ↗</a>
       <a href="mailto:hello@nellihorvath.com">Contact ↗</a>
     </div>
   </div>
@@ -317,14 +371,32 @@
     <source src="images/tennis-loop-1080.mp4" type="video/mp4">
   </video>
   <div class="hero-shade"></div>
+<a href="#explore" class="scroll-hint" style="text-decoration:none">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+      <span class="scroll-arrow">↓</span>
+    </a>
   <div class="container">
     <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
     <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
+
+
+  </div>
+</section>
+
+
+<!-- CODE ZONE -->
+<section class="code-zone" id="explore">
+  <div class="container">
     <p class="hero-sub">AI-generated images, music and short films — created by Pixelia Pictures.</p>
-    <div class="scroll-hint">
-      <span>Scroll to explore</span>
-      <div class="scroll-line"></div>
+    <div class="term-wrap">
+    <video class="hopper" autoplay muted loop playsinline preload="auto" poster="images/grasshopper-poster.jpg" aria-hidden="true"><source src="images/grasshopper-loop.mp4" type="video/mp4"></video>
+    <div class="terminal">
+      <div class="term-bar"><i></i><i></i><i></i><span>pixelia — claude</span></div>
+      <div class="term-body" id="termBody" aria-live="polite"></div>
     </div>
+    </div>
+    <div class="wave-wrap"><canvas class="wave" id="wave" aria-hidden="true"></canvas></div>
   </div>
 </section>
 
@@ -334,6 +406,8 @@
   <p class="footer-copy">© 2026 Pixelia Pictures</p>
   <ul class="footer-links">
     <li><a href="https://www.instagram.com/pixelia.ai?igsh=aW9tdWF6MzFxOWs1&utm_source=qr" target="_blank">Instagram</a></li>
+    <li><a href="https://x.com/PixeliaPictures" target="_blank">X</a></li>
+    <li><a href="https://www.linkedin.com/in/korneliahorvath/" target="_blank">LinkedIn</a></li>
     <li><a href="mailto:hello@nellihorvath.com">Contact</a></li>
   </ul>
 </footer>
@@ -379,6 +453,78 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { overlay.classList.remove('open'); document.body.style.overflow = ''; }
   });
+
+  // ── CODE ZONE ──
+  {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const NEON = '#39FF14';
+
+    // Typewriter terminal
+    const tb = document.getElementById('termBody');
+    const greet = ['Welcome to Pixelia Pictures.','Hello, visitor. Lights, camera, code.','Welcome. Pull up a chair — the show is loading.','Hi there. You found the studio.'];
+    const status = [
+      ['images', 'rendering'], ['music_videos', 'festival-nominated'], ['lia_xo', 'online'],
+      ['kling', 'connected'], ['tennis_ball', 'in flight'], ['soundtrack', 'warming up'], ['grasshopper', 'caffeinated']
+    ];
+    const pick = (a,n) => a.slice().sort(() => Math.random()-0.5).slice(0,n);
+    let run = 0;
+    const row = (lines,k,v) => lines.push(['d','  '+k.padEnd(13,'.')+' '], ['y', v+'\n']);
+    function script(){
+      const lines = [];
+      if (run++ % 2 === 0) {
+        lines.push(['p','$ '],['','claude\n'],['d','> '],['','say hello to our visitor\n\n']);
+        [['picture','rendering'],['video','rolling'],['music','playing'],['ugc','creating']].forEach(([k,v]) => row(lines,k,v));
+        lines.push(['','\n'],['p','✦ '],['', greet[Math.random()*greet.length|0]+'\n']);
+      } else {
+        lines.push(['p','$ '],['','claude\n'],['d','> '],['','list tools\n\n']);
+        [['midjourney','4,000 images since 2023'],['nano_banana','lia xo music video'],['gpt_image','always on'],
+         ['firefly','on set'],['kling','connected'],['heygen','lip-syncing'],['claude','is a DJ']].forEach(([k,v]) => row(lines,k,v));
+      }
+      return lines;
+    }
+    async function type(){
+      while (true) {
+        tb.innerHTML = '';
+        for (const [cls, txt] of script()) {
+          const span = document.createElement('span'); if (cls) span.className = cls; tb.appendChild(span);
+          for (const ch of txt) { span.textContent += ch; await new Promise(r => setTimeout(r, reduce ? 0 : 28 + Math.random()*40)); }
+        }
+        const car = document.createElement('span'); car.className = 'caret'; tb.appendChild(car);
+        await new Promise(r => setTimeout(r, 6000));
+      }
+    }
+    type();
+
+    // Sound wave
+    const wc = document.getElementById('wave'), wx = wc.getContext('2d');
+    function sizeWave(){ const d = devicePixelRatio || 1; wc.width = wc.clientWidth*d; wc.height = wc.clientHeight*d; wx.setTransform(d,0,0,d,0,0); }
+    const ro2 = new ResizeObserver(sizeWave); ro2.observe(wc);
+    let t = 0;
+    // pseudo-audio: beats + noise, like a real track in an editor
+    const N = 2400, amp = new Float32Array(N);
+    for (let i=0;i<N;i++){
+      const beat = Math.pow(Math.max(0, Math.sin(i/N*Math.PI*2*48)), 6);      // kick pulses
+      const phrase = 0.55 + 0.45*Math.sin(i/N*Math.PI*2*3);                  // louder / quieter parts
+      const noise = Math.random();
+      amp[i] = Math.min(1, (0.18 + 0.5*beat + 0.45*noise*noise) * phrase);
+    }
+    let off = 0;
+    function wave(){
+      const W = wc.clientWidth, H = wc.clientHeight, mid = H/2, step = 3;
+      wx.clearRect(0,0,W,H);
+      wx.strokeStyle = 'rgba(255,255,255,0.85)'; wx.lineWidth = 1;
+      wx.beginPath();
+      for (let x=0; x<W; x+=step){
+        const h = amp[(Math.floor(x/step + off)) % N] * (H/2 - 2);
+        wx.moveTo(x+0.5, mid-h); wx.lineTo(x+0.5, mid+h);
+      }
+      wx.stroke();
+      wx.strokeStyle = 'rgba(255,255,255,0.25)'; wx.beginPath(); wx.moveTo(0,mid+0.5); wx.lineTo(W,mid+0.5); wx.stroke();
+      off += reduce ? 0 : 0.35;
+      if (!reduce) requestAnimationFrame(wave);
+    }
+    wave();
+  }
 </script>
 </body>
 </html>
