@@ -8,6 +8,7 @@
 <style>
   :root {
     --yellow: #E8FF00;
+    --magenta: #FF6A00;
     --black: #060606;
     --dark: #0d0d0d;
     --mid: #1a1a1a;
@@ -53,8 +54,8 @@
     text-transform: uppercase; color: var(--white); text-decoration: none;
     opacity: 0.5; transition: opacity 0.2s, color 0.2s;
   }
-  .nav-links a:hover { opacity: 1; color: var(--yellow); }
-  .nav-links a.cta { color: var(--yellow); opacity: 0.8; border-bottom: 1px solid rgba(232,255,0,0.3); padding-bottom: 2px; }
+  .nav-links a:hover { opacity: 1; color: var(--magenta); }
+  .nav-links a.cta { color: var(--magenta); opacity: 1; border-bottom: 1px solid rgba(255,106,0,0.5); padding-bottom: 2px; }
 
   .menu-btn {
     display: none;
@@ -144,7 +145,7 @@
   }
   .overlay-nav a:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
   .overlay-nav a:hover { color: var(--yellow); padding-left: 0.5rem; }
-  .overlay-nav a.cta-link { color: rgba(232,255,0,0.7); }
+  .overlay-nav a.cta-link { color: var(--magenta); }
 
   .overlay-bottom {
     display: flex; justify-content: space-between; align-items: flex-end;
@@ -225,7 +226,7 @@
     width: 100%; height: 100%; background: var(--yellow);
     animation: scanline 2s ease-in-out infinite;
   }
-  .scroll-hint .scroll-arrow { writing-mode: horizontal-tb; letter-spacing: 0; font-size: 16px; color: var(--yellow); margin-top: -6px; }
+  .scroll-hint .scroll-arrow { writing-mode: horizontal-tb; letter-spacing: 0; font-size: 16px; color: var(--magenta); margin-top: -6px; }
   @keyframes scanline {
     0% { top: -100%; } 100% { top: 100%; }
   }
@@ -248,8 +249,9 @@
   .term-body { height: calc(11 * 1.55em + 34px); overflow: hidden; }
   .term-body .p { color: var(--neon); }
   .term-body .y { color: var(--yellow); }
+  .term-body .m { color: var(--magenta); }
   .term-body .d { color: rgba(240,240,240,0.72); }
-  .caret { display: inline-block; width: 8px; height: 1.1em; background: var(--neon); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  .caret { display: inline-block; width: 8px; height: 1.1em; background: var(--magenta); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   .wave-wrap { position: relative; height: 90px; margin-top: 24px; }
   .wave { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -290,7 +292,7 @@
   .footer-copy { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: rgba(240,240,240,0.4); text-transform: uppercase; }
   .footer-links { display: flex; gap: 28px; list-style: none; }
   .footer-links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,240,240,0.6); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--yellow); }
+  .footer-links a:hover { color: var(--magenta); }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -479,7 +481,7 @@
       if (run++ % 2 === 0) {
         lines.push(['p','$ '],['','claude\n'],['d','> '],['','say hello to our visitor\n\n']);
         [['picture','rendering'],['video','rolling'],['music','playing'],['ugc','creating']].forEach(([k,v]) => row(lines,k,v));
-        lines.push(['','\n'],['p','✦ '],['', greet[Math.random()*greet.length|0]+'\n']);
+        lines.push(['','\n'],['m','✦ '],['', greet[Math.random()*greet.length|0]+'\n']);
       } else {
         lines.push(['p','$ '],['','claude\n'],['d','> '],['','list tools\n\n']);
         [['midjourney','4,000 images since 2023'],['nano_banana','lia xo music video'],['gpt_image','always on'],
