@@ -183,7 +183,7 @@
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
     background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0) 55%);
   }
-  .hero .container { position: relative; z-index: 2; }
+  .hero .container { position: relative; z-index: auto; }
   @keyframes fadeIn { to { opacity: 1; } }
   .grid-overlay { display: none; }
   .hero-label {
@@ -194,8 +194,11 @@
   }
   .hero-title {
     font-family: var(--display); font-size: clamp(80px, 14vw, 200px);
-    line-height: 0.85; position: relative; z-index: 2;
+    line-height: 0.85; position: relative; z-index: 6;
     opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-title .visor {
+    color: #FF7A00;
   }
   .hero-title .outline {
     color: transparent; -webkit-text-stroke: 1px rgba(232,255,0,0.25);
@@ -233,16 +236,16 @@
 
 
   /* ── CODE SECTION ── */
-  :root { --neon: #39FF14; }
+  :root { --neon: #E8FF00; }
   .code-zone { position: relative; overflow: visible; background: #000; padding: 40px 48px 24px; }
   .code-zone .container { position: relative; z-index: 1; }
   .terminal {
     max-width: 640px; background: #000;
-    border: 1px solid rgba(57,255,20,0.25); border-radius: 10px;
+    border: 1px solid rgba(232,255,0,0.35); border-radius: 10px;
     box-shadow: none;
     font-family: var(--mono); font-size: 14px; line-height: 1.55; color: rgba(240,240,240,0.85);
   }
-  .term-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(57,255,20,0.12); }
+  .term-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(232,255,0,0.15); }
   .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); display: block; }
   .term-bar span { margin-left: 10px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,240,240,0.6); }
   .term-body { padding: 16px 20px 18px; min-height: 0; white-space: pre-wrap; word-break: break-word; }
@@ -256,7 +259,7 @@
   .wave-wrap { position: relative; height: 90px; margin-top: 24px; }
   .wave { position: absolute; inset: 0; width: 100%; height: 100%; }
   @media (max-width: 768px) {
-    .hero { min-height: 72svh; }
+    .hero { min-height: 58svh; }
     .scroll-hint { right: 14px; top: 100px; bottom: 36px; }
     .scroll-hint span { font-size: 10px; }
     .code-zone { padding: 16px 24px 12px; }
@@ -280,7 +283,7 @@
 
 
   .splash { position: absolute; left: 0; top: 0; height: 95%; width: auto; z-index: 4; mix-blend-mode: lighten; pointer-events: none; }
-  @media (max-width: 900px) { .splash { height: 70%; } }
+  @media (max-width: 900px) { .splash { height: 80%; } }
 
   /* ── FOOTER ── */
   footer {
@@ -305,7 +308,7 @@
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
     .hero { padding: 80px 24px 20px; }
-    .hero-title { font-size: clamp(44px, 13vw, 90px); }
+    .hero-title { font-size: clamp(60px, 25vw, 200px); }
     footer { flex-direction: column; gap: 12px; padding: 32px 24px; text-align: center; align-items: center; }
     .footer-links { justify-content: center; }
   }
@@ -385,7 +388,7 @@
     </a>
   <div class="container">
     <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
-    <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
+    <h1 class="hero-title"><span class="visor">PIXELIA</span><br><span class="outline">PICTURES</span></h1>
 
 
   </div>
@@ -464,7 +467,7 @@
   // ── CODE ZONE ──
   {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const NEON = '#39FF14';
+    const NEON = '#E8FF00';
 
     // Typewriter terminal
     const tb = document.getElementById('termBody');
