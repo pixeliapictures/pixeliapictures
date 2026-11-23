@@ -167,10 +167,21 @@
 
   /* ── HERO ── */
   .hero {
-    min-height: auto; display: flex; flex-direction: column;
-    justify-content: flex-end; padding: 100px 48px 48px; position: relative; overflow: hidden;
-    background: var(--black);
+    min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 150px 48px 56px; position: relative; overflow: hidden;
+    background: #000;
   }
+  .hero-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0; background: #000;
+    opacity: 0; animation: fadeIn 1.2s ease 0.1s forwards;
+  }
+  .hero-shade {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0) 60%);
+  }
+  .hero .container { position: relative; z-index: 2; }
+  @keyframes fadeIn { to { opacity: 1; } }
   .grid-overlay { display: none; }
   .hero-label {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
@@ -237,7 +248,7 @@
     .nav-bar { padding: 18px 24px; }
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
-    .hero { padding: 80px 24px 40px; }
+    .hero { padding: 140px 24px 44px; }
     .hero-title { font-size: clamp(44px, 13vw, 90px); }
     footer { flex-direction: column; gap: 12px; padding: 32px 24px; text-align: center; align-items: center; }
     .footer-links { justify-content: center; }
@@ -301,7 +312,11 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="grid-overlay"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/tennis-poster.jpg" aria-hidden="true">
+    <source src="images/tennis-loop-720.mp4" type="video/mp4" media="(max-width: 900px)">
+    <source src="images/tennis-loop-1080.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
   <div class="container">
     <p class="hero-label">⬡ AI Film &amp; Creative Studio</p>
     <h1 class="hero-title">PIXELIA<br><span class="outline">PICTURES</span></h1>
